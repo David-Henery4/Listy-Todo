@@ -1,12 +1,16 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      smLap: "57.5em", // 57.5em === 960px
+    },
     colors: {
       white: "#ffffff",
       black: "#000000",
@@ -21,7 +25,11 @@ const config: Config = {
       veryDarkGrayishBlue_light: "#484B6A",
       border_light: "#E3E4F1",
       labelGrey_light: "#9495A5",
+      todoText_light: "#494C6B",
+      todoTextCrossedOut_light: "#D1D2DA",
       //
+      todoText_dark: "#C8CBE7",
+      todoTextCrossedOut_dark: "#4D5067",
       labelGrey_dark: "#767992",
       border_dark: "#393A4B",
       veryDarkBlue_dark: "#161722",

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { jose } from "@/fonts/fonts";
 import "./globals.css";
-
-
+import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${jose.variable}`}>
-      <body className="font-joseSans bg-veryLightGray_light">{children}</body>
+    <html suppressHydrationWarning lang="en" className={`${jose.variable}`}>
+      <body className="font-joseSans bg-veryLightGray_light">
+        <ThemeProvider attribute="class">{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

@@ -5,7 +5,7 @@ const Input = () => {
   const [isInputActive,setIsInputActive] = useState(false)
   //
   return (
-    <div className="relative w-full flex-1">
+    <div className="relative w-full flex-1 text-sm smLap:text-lg">
       <input
         className="bg-white/0 w-full outline-none hover:cursor-pointer"
         id="todo-input"
