@@ -14,11 +14,15 @@ const Input = () => {
         onFocus={(e) => setIsInputActive(true)}
         onBlur={(e) => {
           const inputValue: string = e.target.value;
-          inputValue.length >= 1 ? setIsInputActive(true) : setIsInputActive(false)
+          inputValue.length >= 1
+            ? setIsInputActive(true)
+            : setIsInputActive(false);
         }}
       />
       <label
-        className={`absolute top-1/2 left-0 -translate-y-1/2 pointer-events-none text-labelGrey_light ${isInputActive ? "hidden" : "block"}`}
+        className={`absolute top-1/2 left-0 -translate-y-1/2 pointer-events-none text-labelGrey_light dark:text-labelGrey_dark ${
+          isInputActive ? "hidden" : "block"
+        }`}
         htmlFor="todo-input"
       >
         Create a new todo…

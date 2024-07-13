@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: 'class',
+  darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -30,7 +30,10 @@ const config: Config = {
       //
       todoText_dark: "#C8CBE7",
       todoTextCrossedOut_dark: "#4D5067",
+      backgroundBody_dark: "#171823",
       labelGrey_dark: "#767992",
+      dragNDropLabel_dark: "#5B5E7E",
+      todoBg_dark: "#25273D",
       border_dark: "#393A4B",
       veryDarkBlue_dark: "#161722",
       veryDarkDesaturatedBlue_dark: "#25273C",

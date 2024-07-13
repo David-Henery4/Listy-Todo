@@ -7,7 +7,7 @@ const TodosContent = () => {
 
       <TodosContainer />
 
-      <p className="mt-10 text-center text-sm text-labelGrey_light">
+      <p className="mt-10 text-center text-sm text-labelGrey_light dark:text-dragNDropLabel_dark">
         Drag and drop to reorder list
       </p>
     </section>

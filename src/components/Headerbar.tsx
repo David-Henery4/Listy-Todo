@@ -1,4 +1,5 @@
-import { LogoIcon, MoonIcon, SunIcon } from "../../public/images";
+import { LogoIcon } from "../../public/images";
+import ThemeToggle from "./header/ThemeToggle";
 
 const Headerbar = () => {
   return (
@@ -10,12 +11,7 @@ const Headerbar = () => {
         <span className="sr-only">Application Logo Icon: TODO</span>
       </h1>
       <div>
-        <button>
-          <span>
-            <MoonIcon />
-          </span>
-          <span className="sr-only">Theme Toggle: Currently light theme</span>
-        </button>
+        <ThemeToggle/>
       </div>
     </div>
   );
