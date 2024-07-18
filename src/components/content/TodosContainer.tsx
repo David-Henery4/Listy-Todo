@@ -1,7 +1,10 @@
 import Todo from "./todo/Todo";
 import TodosStatusBar from "./TodosStatusBar";
+import createUserAction from "@/actions/createUser";
 
-const TodosContainer = () => {
+const TodosContainer = async () => {
+  // const res = await createUserAction()
+  // console.log(res)
   return (
     <>
       <menu className="w-full mt-4 rounded-md bg-white shadow-lg smLap:mt-6 dark:bg-todoBg_dark">
