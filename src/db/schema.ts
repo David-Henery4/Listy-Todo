@@ -12,7 +12,7 @@ export const usersRelations = relations(usersTable, ({many}) => ({
 }))
 
 export const todosTable = pgTable("todos_table", {
-  id: serial("id").primaryKey(),
+  id: serial("id").primaryKey().unique(),
   todoContent: text("todo_content").notNull(),
   userId: integer("user_id")
     .notNull()
