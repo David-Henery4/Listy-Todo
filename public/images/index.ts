@@ -10,6 +10,8 @@ import CrossIcon from "./icon-cross.svg"
 import MoonIcon from "./icon-moon.svg"
 import SunIcon from "./icon-sun.svg"
 import LogoIcon from "./logo.svg"
+import GoogleIcon from "./icon-google.svg"
+import GithubIcon from "./icon-github.svg"
 
 export {
   // Images
@@ -23,4 +25,6 @@ export {
   MoonIcon,
   SunIcon,
   LogoIcon,
+  GithubIcon,
+  GoogleIcon
 }

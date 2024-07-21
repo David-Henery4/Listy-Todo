@@ -34,6 +34,7 @@ const config: Config = {
       labelGrey_dark: "#767992",
       dragNDropLabel_dark: "#5B5E7E",
       todoBg_dark: "#25273D",
+      veryDarkNavy_dark: "#161725",
       border_dark: "#393A4B",
       veryDarkBlue_dark: "#161722",
       veryDarkDesaturatedBlue_dark: "#25273C",
