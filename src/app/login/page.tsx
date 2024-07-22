@@ -21,15 +21,7 @@ const LoginPage = () => {
 
         <Form />
 
-        <div className="mt-6 flex flex-col justify-center items-center gap-4">
-          <p>
-            Don&apos;t have an account?{" "}
-            <span className="text-brightBlue hover:cursor-pointer">
-              Sign-up!
-            </span>
-          </p>
-          <p className="text-sm hover:cursor-pointer">(click here to sign in with demo account)</p>
-        </div>
+        
       </div>
     </main>
   );

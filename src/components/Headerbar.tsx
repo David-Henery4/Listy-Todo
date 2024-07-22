@@ -1,5 +1,6 @@
 import { LogoIcon } from "../../public/images";
 import ThemeToggle from "./header/ThemeToggle";
+import {Signout} from "./header"
 
 const Headerbar = () => {
   return (
@@ -10,8 +11,11 @@ const Headerbar = () => {
         </span>
         <span className="sr-only">Application Logo Icon: TODO</span>
       </h1>
-      <div>
-        <ThemeToggle/>
+      <div className="flex justify-end items-center gap-4">
+        <div>
+          <Signout/>
+        </div>
+        <ThemeToggle />
       </div>
     </div>
   );
