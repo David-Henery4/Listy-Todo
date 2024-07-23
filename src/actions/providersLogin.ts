@@ -19,3 +19,20 @@ export async function signinWithGoogle() {
     redirect(data.url);
   }
 }
+
+export async function signinWithGithub (){
+  const supabase = createClient();
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "github",
+    options: {
+      redirectTo: "http://localhost:3000/auth/callback",
+    },
+  });
+  if (error) {
+    console.error("Error: ", error);
+    return { msg: "There has been a Error", error };
+  }
+  if (data.url){
+    redirect(data.url)
+  }
+}

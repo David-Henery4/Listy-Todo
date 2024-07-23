@@ -14,6 +14,7 @@ const Form = () => {
     <>
       <form>
         <div className="flex flex-col justify-center items-center gap-4">
+          <Input name="display_name" id="display_name" label="Username" />
           <Input name="email" id="email" label="Email" />
           <Input name="password" id="password" label="Password" />
           <SubmitBtn isSignup={isSignupActive}  />

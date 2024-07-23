@@ -1,8 +1,9 @@
 "use client"; // Might be temp because of server action
 import { GoogleIcon, GithubIcon } from "../../../../public/images";
+import { signinWithGoogle, signinWithGithub } from "@/actions/providersLogin";
 
 interface ProviderBtn {
-  providerName: string;
+  providerName: "google" | "github";
 }
 
 const ProviderBtn = ({ providerName }: ProviderBtn) => {
@@ -13,6 +14,10 @@ const ProviderBtn = ({ providerName }: ProviderBtn) => {
           ? "bg-veryDarkNavy_dark active:bg-veryDarkNavy_dark"
           : "bg-black active:bg-black"
       }`}
+      onClick={() => {
+        if (providerName === "google") signinWithGoogle();
+        if (providerName === "github") signinWithGithub();
+      }}
     >
       <span className="w-6 h-6 inline-block">
         {providerName === "google" && <GoogleIcon />}
