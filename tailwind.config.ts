@@ -13,6 +13,7 @@ const config: Config = {
     },
     colors: {
       white: "#ffffff",
+      errorRed: "#d92828",
       black: "#000000",
       brightBlue: "#3A7BFD",
       checkBackgroundBottom: "#57DDFF",

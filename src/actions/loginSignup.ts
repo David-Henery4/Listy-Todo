@@ -1,9 +1,10 @@
-"use server"
-import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
-import { createClient } from "@/utils/supabase/server"
+"use server";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { createClient } from "@/utils/supabase/server";
 
-export async function login (formData: FormData) {
+export async function login(formData: FormData) {
+  console.log("FormData: ", formData);
   const supabase = createClient();
   console.log(formData.get("display_name"));
   //
@@ -15,17 +16,19 @@ export async function login (formData: FormData) {
     display_name: formData.get("display_name") as string,
   };
 
-  const {error} = await supabase.auth.signInWithPassword(data)
+  const { error } = await supabase.auth.signInWithPassword(data);
 
-  if (error){
-    redirect("/error")
+  if (error) {
+    // redirect("/error")
+    // return error
+    return { isError: true, msg: error.message };
   }
 
-  revalidatePath("/", "layout")
-  redirect("/")
+  revalidatePath("/", "layout");
+  redirect("/");
 }
 
-export async function signup (formData: FormData){
+export async function signup(formData: FormData) {
   const supabase = createClient();
   console.log("signup called");
   console.log(formData.get("display_name"));
@@ -44,12 +47,12 @@ export async function signup (formData: FormData){
     },
   };
   //
-  const {error} = await supabase.auth.signUp(data)
-  console.log("Error: ",error);
+  const { error } = await supabase.auth.signUp(data);
   //
   if (error) {
-    redirect("/error")
+    // redirect("/error")
+    return { isError: true, msg: error.message };
   }
-  revalidatePath("/", "layout")
-  redirect("/")
+  revalidatePath("/", "layout");
+  redirect("/");
 }
