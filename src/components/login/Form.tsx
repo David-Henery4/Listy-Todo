@@ -148,6 +148,7 @@ const Form = () => {
           e.preventDefault();
           checkInputValidation();
           if (errorStates.isError) return;
+          
           handleFormSubmit();
         }}
       >
