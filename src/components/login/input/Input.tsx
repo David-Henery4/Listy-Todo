@@ -1,14 +1,18 @@
-import { FormValues } from "../Form";
+import { FormValues, FormErrorStates } from "../Form";
 import { Dispatch, SetStateAction, ChangeEvent } from "react";
 
 interface FormInput {
   label: string;
   id: string;
   name: string;
-  setFormValues: Dispatch<SetStateAction<FormValues>>
+  setFormValues: Dispatch<SetStateAction<FormValues>>;
+  errorState: {
+    isError: boolean;
+    msg: string;
+  };
 }
 
-const Input = ({ id, label, name, setFormValues }: FormInput) => {
+const Input = ({ id, label, name, setFormValues, errorState }: FormInput) => {
   //
   const handleUpdateValue = (e: ChangeEvent<HTMLInputElement>) => {
     const newInputValue = e.target.value
@@ -30,6 +34,7 @@ const Input = ({ id, label, name, setFormValues }: FormInput) => {
         type="text"
         onChange={(e) => handleUpdateValue(e)}
       />
+      {errorState?.isError && <p className="text-xs text-errorRed">{errorState?.msg}</p> }
     </div>
   );
 };

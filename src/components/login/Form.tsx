@@ -3,6 +3,7 @@ import { useState } from "react";
 import Input from "./input/Input";
 import SubmitBtn from "./submit/SubmitBtn";
 import { login, signup } from "@/actions/loginSignup";
+import emailRegEx from "@/helpers/form/emailRegEx";
 
 export interface FormValues {
   display_name: string;
@@ -15,19 +16,35 @@ export interface LoginOrSignupError {
   msg: string;
 }
 
+export interface FormErrorStates {
+  isError: boolean;
+  display_name: { isError: boolean; msg: string }; // Might be optional
+  email: { isError: boolean; msg: string };
+  password: { isError: boolean; msg: string };
+}
+
+// // "isSignup ? signup() : login()" // //
+
 const Form = () => {
   const [isSignupActive, setIsSignupActive] = useState(false);
+  const [loginOrSignupError, setLoginOrSignupError] =
+    useState<LoginOrSignupError>({
+      isError: false,
+      msg: "",
+    });
   const [formValues, setFormValues] = useState<FormValues>({
     display_name: "",
     password: "",
     email: "",
   });
-  const [loginOrSignupError, setLoginOrSignupError] = useState<LoginOrSignupError>({
+  const [errorStates, setErrorStates] = useState<FormErrorStates>({
     isError: false,
-    msg: "",
+    display_name: { isError: false, msg: "" },
+    email: { isError: false, msg: "" },
+    password: { isError: false, msg: "" },
   });
   //
-  const handleFormSubmit = async () => {
+  const createNewFormData = (): FormData => {
     const newFormData = new FormData();
     const formKeysAndValues = Object.entries(formValues);
     formKeysAndValues.forEach((formItem) => {
@@ -35,9 +52,80 @@ const Form = () => {
       const value = formItem[1];
       newFormData.append(key, value);
     });
-    // "isSignup ? signup() : login()"
+    return newFormData;
+  };
+  //
+  const checkInputValidation = () => {
+    console.log("called #1")
+    const formValuesList = Object.entries(formValues);
+    setErrorStates((): FormErrorStates => {
+      return {
+        isError: false,
+        display_name: { isError: false, msg: "" },
+        email: { isError: false, msg: "" },
+        password: { isError: false, msg: "" },
+      };
+    });
+    console.log("called #2");
+    //
+    formValuesList.forEach((formItem) => {
+      const key = formItem[0];
+      const value = formItem[1];
+      console.log("formItem: ", formItem)
+      console.log("called #3");
+      //
+      if (key !== "isError" && value?.trim()?.length <= 0) {
+        setErrorStates((oldValues): FormErrorStates => {
+          return {
+            ...oldValues,
+            isError: true,
+            [key]: { isError: true, msg: "Can't be empty" },
+          };
+        });
+        console.log("called #4: ", value);
+        console.log("called #6");
+        return;
+      }
+      if (!isSignupActive) {
+        setErrorStates((oldValues): FormErrorStates => {
+          return {
+            ...oldValues,
+            isError: false,
+            display_name: { isError: false, msg: "" },
+          };
+        });
+        console.log("called #5");
+      }
+      if (key === "email" && !new RegExp(emailRegEx).test(value?.trim())) {
+        setErrorStates((oldValues): FormErrorStates => {
+          return {
+            ...oldValues,
+            isError: true,
+            email: { isError: true, msg: "Email not valid" },
+          };
+        });
+        console.log("called #7");
+        return;
+      }
+      //
+    });
+    console.log("called #8");
+    // if (formValues.display_name.length <= 0) {
+    //   setErrorStates((oldValues): FormErrorStates => {
+    //     return {
+    //       ...oldValues,
+    //       isError: true,
+    //       display_nameError: { isError: true, msg: "Can't be empty" },
+    //     };
+    //   });
+  };
+  //
+  const handleFormSubmit = async () => {
+    //
+    const newFormData = createNewFormData();
+    //
     if (isSignupActive) {
-      const res = await signup(newFormData)
+      const res = await signup(newFormData);
       if (res?.isError) {
         setLoginOrSignupError({ isError: res?.isError, msg: res?.msg });
       } else {
@@ -46,9 +134,9 @@ const Form = () => {
       return;
     }
     const res = await login(newFormData);
-    if (res?.isError){
+    if (res?.isError) {
       setLoginOrSignupError({ isError: res?.isError, msg: res?.msg });
-    } else{
+    } else {
       setLoginOrSignupError({ isError: false, msg: "" });
     }
   };
@@ -58,6 +146,8 @@ const Form = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          checkInputValidation();
+          if (errorStates.isError) return;
           handleFormSubmit();
         }}
       >
@@ -68,6 +158,7 @@ const Form = () => {
               id="display_name"
               label="Username"
               setFormValues={setFormValues}
+              errorState={errorStates.display_name}
             />
           )}
           <Input
@@ -75,12 +166,14 @@ const Form = () => {
             id="email"
             label="Email"
             setFormValues={setFormValues}
+            errorState={errorStates.email}
           />
           <Input
             name="password"
             id="password"
             label="Password"
             setFormValues={setFormValues}
+            errorState={errorStates.password}
           />
           <SubmitBtn
             isSignup={isSignupActive}
