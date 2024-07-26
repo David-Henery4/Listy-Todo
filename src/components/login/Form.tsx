@@ -3,7 +3,11 @@ import { useState } from "react";
 import Input from "./input/Input";
 import SubmitBtn from "./submit/SubmitBtn";
 import { login, signup } from "@/actions/loginSignup";
-import emailRegEx from "@/helpers/form/emailRegEx";
+import {
+  handleSubmitError,
+  formInputErrorsDefaultStates,
+  checkInputValidation,
+} from "@/helpers/form";
 
 export interface FormValues {
   display_name: string;
@@ -27,22 +31,19 @@ export interface FormErrorStates {
 
 const Form = () => {
   const [isSignupActive, setIsSignupActive] = useState(false);
-  const [loginOrSignupError, setLoginOrSignupError] =
-    useState<LoginOrSignupError>({
-      isError: false,
-      msg: "",
-    });
+  const [errorStates, setErrorStates] = useState<FormErrorStates>(
+    formInputErrorsDefaultStates
+  );
   const [formValues, setFormValues] = useState<FormValues>({
     display_name: "",
     password: "",
     email: "",
   });
-  const [errorStates, setErrorStates] = useState<FormErrorStates>({
-    isError: false,
-    display_name: { isError: false, msg: "" },
-    email: { isError: false, msg: "" },
-    password: { isError: false, msg: "" },
-  });
+  const [loginOrSignupError, setLoginOrSignupError] =
+    useState<LoginOrSignupError>({
+      isError: false,
+      msg: "",
+    });
   //
   const createNewFormData = (): FormData => {
     const newFormData = new FormData();
@@ -55,90 +56,16 @@ const Form = () => {
     return newFormData;
   };
   //
-  const checkInputValidation = () => {
-    console.log("called #1")
-    const formValuesList = Object.entries(formValues);
-    setErrorStates((): FormErrorStates => {
-      return {
-        isError: false,
-        display_name: { isError: false, msg: "" },
-        email: { isError: false, msg: "" },
-        password: { isError: false, msg: "" },
-      };
-    });
-    console.log("called #2");
-    //
-    formValuesList.forEach((formItem) => {
-      const key = formItem[0];
-      const value = formItem[1];
-      console.log("formItem: ", formItem)
-      console.log("called #3");
-      //
-      if (key !== "isError" && value?.trim()?.length <= 0) {
-        setErrorStates((oldValues): FormErrorStates => {
-          return {
-            ...oldValues,
-            isError: true,
-            [key]: { isError: true, msg: "Can't be empty" },
-          };
-        });
-        console.log("called #4: ", value);
-        console.log("called #6");
-        return;
-      }
-      if (!isSignupActive) {
-        setErrorStates((oldValues): FormErrorStates => {
-          return {
-            ...oldValues,
-            isError: false,
-            display_name: { isError: false, msg: "" },
-          };
-        });
-        console.log("called #5");
-      }
-      if (key === "email" && !new RegExp(emailRegEx).test(value?.trim())) {
-        setErrorStates((oldValues): FormErrorStates => {
-          return {
-            ...oldValues,
-            isError: true,
-            email: { isError: true, msg: "Email not valid" },
-          };
-        });
-        console.log("called #7");
-        return;
-      }
-      //
-    });
-    console.log("called #8");
-    // if (formValues.display_name.length <= 0) {
-    //   setErrorStates((oldValues): FormErrorStates => {
-    //     return {
-    //       ...oldValues,
-    //       isError: true,
-    //       display_nameError: { isError: true, msg: "Can't be empty" },
-    //     };
-    //   });
-  };
-  //
   const handleFormSubmit = async () => {
-    //
     const newFormData = createNewFormData();
     //
     if (isSignupActive) {
       const res = await signup(newFormData);
-      if (res?.isError) {
-        setLoginOrSignupError({ isError: res?.isError, msg: res?.msg });
-      } else {
-        setLoginOrSignupError({ isError: false, msg: "" });
-      }
+      handleSubmitError(res, setLoginOrSignupError);
       return;
     }
     const res = await login(newFormData);
-    if (res?.isError) {
-      setLoginOrSignupError({ isError: res?.isError, msg: res?.msg });
-    } else {
-      setLoginOrSignupError({ isError: false, msg: "" });
-    }
+    handleSubmitError(res, setLoginOrSignupError);
   };
   //
   return (
@@ -146,9 +73,12 @@ const Form = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          checkInputValidation();
-          if (errorStates.isError) return;
-          
+          const isError = checkInputValidation(
+            formValues,
+            isSignupActive,
+            setErrorStates
+          );
+          if (isError) return;
           handleFormSubmit();
         }}
       >
@@ -190,6 +120,14 @@ const Form = () => {
           <span
             className="text-brightBlue hover:cursor-pointer"
             onClick={() => {
+              setErrorStates((): FormErrorStates => {
+                return {
+                  isError: false,
+                  display_name: { isError: false, msg: "" },
+                  email: { isError: false, msg: "" },
+                  password: { isError: false, msg: "" },
+                };
+              });
               setIsSignupActive(!isSignupActive);
             }}
           >
