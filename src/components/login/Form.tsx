@@ -27,8 +27,6 @@ export interface FormErrorStates {
   password: { isError: boolean; msg: string };
 }
 
-// // "isSignup ? signup() : login()" // //
-
 const Form = () => {
   const [isSignupActive, setIsSignupActive] = useState(false);
   const [errorStates, setErrorStates] = useState<FormErrorStates>(
@@ -67,6 +65,15 @@ const Form = () => {
     const res = await login(newFormData);
     handleSubmitError(res, setLoginOrSignupError);
   };
+  //
+  const handleDemoLogin = async () => {
+    const newFormData = new FormData();
+    // Might hide in env variables
+    newFormData.append("email", "demo1234@demo.com")
+    newFormData.append("password", "demo1234")
+    const res = await login(newFormData);
+    handleSubmitError(res, setLoginOrSignupError);
+  }
   //
   return (
     <>
@@ -135,10 +142,10 @@ const Form = () => {
           </span>
         </p>
         <p
-          className="text-sm hover:cursor-pointer"
-          // onClick={() => handleFormSubmit()}
+          className="text-sm hover:cursor-pointer hover:text-checkBackgroundTop"
+          onClick={() => handleDemoLogin()}
         >
-          (click here to sign in with demo account)
+          (<span className="">click here</span> to sign in with demo account)
         </p>
       </div>
     </>

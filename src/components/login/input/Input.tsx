@@ -1,4 +1,4 @@
-import { FormValues, FormErrorStates } from "../Form";
+import { FormValues } from "../Form";
 import { Dispatch, SetStateAction, ChangeEvent } from "react";
 
 interface FormInput {
@@ -34,7 +34,7 @@ const Input = ({ id, label, name, setFormValues, errorState }: FormInput) => {
         type="text"
         onChange={(e) => handleUpdateValue(e)}
       />
-      {errorState?.isError && <p className="text-xs text-errorRed">{errorState?.msg}</p> }
+      {errorState?.isError && <p className="text-xs text-errorRed mt-1">{errorState?.msg}</p> }
     </div>
   );
 };
