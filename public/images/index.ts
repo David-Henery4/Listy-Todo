@@ -12,6 +12,7 @@ import SunIcon from "./icon-sun.svg"
 import LogoIcon from "./logo.svg"
 import GoogleIcon from "./icon-google.svg"
 import GithubIcon from "./icon-github.svg"
+import DragHandleIcon from "./icon-drag-handle.svg"
 
 export {
   // Images
@@ -26,5 +27,6 @@ export {
   SunIcon,
   LogoIcon,
   GithubIcon,
-  GoogleIcon
+  GoogleIcon,
+  DragHandleIcon
 }

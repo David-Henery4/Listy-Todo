@@ -12,16 +12,18 @@ export default async function Home() {
   if (error || !data?.user) {
     redirect("/login");
   }
-  const providerName = data.user.app_metadata.provider;
-  const userData = data.user.user_metadata
-  const userName =
-    providerName === "email" ? userData.first_name : userData.name;
-  console.log(userName)
+  const userId = data.user.id
+  console.log("userId: ", userId)
+  // const providerName = data.user.app_metadata.provider;
+  // const userData = data.user.user_metadata
+  // const userName =
+  //   providerName === "email" ? userData.first_name : userData.name;
+  // console.log(userName)
   //
   return (
     // max-h-[300px]
     <main className="">
-      <p className="absolute top-0 left-0 z-10 text-center">Hello {`${userName}`}</p>
+      {/* <p className="relative z-10 text-center mt-8">Hello {`${userName}`}</p> */}
       <header className="w-full">
         <HeaderImage />
         <Headerbar />
