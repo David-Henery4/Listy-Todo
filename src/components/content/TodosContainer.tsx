@@ -2,14 +2,16 @@ import Todo from "./todo/Todo";
 import TodosStatusBar from "./TodosStatusBar";
 import createUserAction from "@/actions/createUser";
 import SortableContainer from "./sortable/SortableContainer";
+import { UserId } from "../TodosContent";
 
-const TodosContainer = async () => {
+
+const TodosContainer = async ({userId}: UserId) => {
   // const res = await createUserAction()
   // console.log(res)
   return (
     <>
       <menu className="w-full mt-4 rounded-md bg-white shadow-lg smLap:mt-6 dark:bg-todoBg_dark">
-        <SortableContainer/>
+        <SortableContainer userId={userId} />
         {/* <Todo />
         <Todo />
         <Todo /> */}

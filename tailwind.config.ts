@@ -48,6 +48,9 @@ const config: Config = {
     fontFamily: {
       joseSans: ["var(--jose-sans)"],
     },
+    gridTemplateColumns: {
+      todoCols: "min-content min-content 1fr min-content",
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

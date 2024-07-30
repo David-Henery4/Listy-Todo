@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import { UserId } from "@/components/TodosContent";
+
 import {
   closestCenter,
   DndContext,
@@ -43,12 +45,12 @@ export interface TempTodoSchema {
 
 type ActiveIdState = UniqueIdentifier | null;
 
-const SortableContainer = () => {
+const SortableContainer = ({userId}: UserId) => {
   const [activeId, setActiveId] = useState<ActiveIdState>(null);
   const [activeItem, setActiveItem] = useState<TempTodoSchema>({
     id: "",
     title: "",
-    userId: "",
+    userId: userId,
     todoContent: "",
     isCompleted: false,
   });
@@ -56,21 +58,21 @@ const SortableContainer = () => {
     {
       id: uuidv4(),
       title: "hello",
-      userId: "",
+      userId: userId,
       todoContent: "",
       isCompleted: false,
     },
     {
       id: uuidv4(),
       title: "Goodbye",
-      userId: "",
+      userId: userId,
       todoContent: "",
       isCompleted: false,
     },
     {
       id: uuidv4(),
       title: "Ciao",
-      userId: "",
+      userId: userId,
       todoContent: "",
       isCompleted: true,
     },

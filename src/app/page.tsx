@@ -28,7 +28,7 @@ export default async function Home() {
         <HeaderImage />
         <Headerbar />
       </header>
-      <TodosContent />
+      <TodosContent userId={userId} />
     </main>
   );
 }

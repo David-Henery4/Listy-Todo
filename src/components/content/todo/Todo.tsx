@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   CrossIcon,
   DragHandleIcon,
@@ -16,6 +17,7 @@ const Todo = ({
   setActivatorNodeRef,
   ...props
 }: TempTodoSchema) => {
+  const [isEditing, setIsEditing] = useState(false);
   //
   // will convert text to input on click for editing
   //
@@ -23,12 +25,12 @@ const Todo = ({
     <li
       ref={setNodeRef}
       {...props}
-      className="px-5 py-4 flex justify-start items-center border-b border-b-border_light smLap:px-6 smLap:py-5 dark:border-b-border_dark"
+      className="px-5 py-4 grid grid-cols-todoCols items-center gap-3 border-b border-b-border_light smLap:px-6 smLap:py-5 dark:border-b-border_dark"
     >
       <div
         ref={setActivatorNodeRef}
         {...listeners}
-        className="mr-3 hover:cursor-grab"
+        className="hover:cursor-grab"
       >
         <DragHandleIcon className="fill-todoText_light dark:fill-todoText_dark" />
       </div>
@@ -46,9 +48,25 @@ const Todo = ({
         )}
         <span className="sr-only">Toggle todo completed or uncompleted</span>
       </button>
-      <p className="text-xs text-todoText_light ml-3 mr-auto flex-1 smLap:text-lg dark:text-todoText_dark hover:cursor-pointer">
-        {title}
-      </p>
+      <div
+        className="h-full flex-1 flex justify-start items-center text-xs text-todoText_light smLap:text-lg dark:text-todoText_dark hover:cursor-pointer"
+        // onClick={() => setIsEditing(!isEditing)}
+      >
+        <div
+          className={`fixed top-0 left-0 w-full h-full cursor-default ${
+            isEditing ? "block" : "hidden"
+          }`}
+          onClick={() => setIsEditing(false)}
+        ></div>
+        {isEditing ? (
+          <input
+            defaultValue={title}
+            className="w-full h-full outline-none z-10 border-b border-b-black dark:border-b-white bg-white/0 dark:bg-todoBg_dark/0"
+          />
+        ) : (
+          <p className="w-full" onClick={() => setIsEditing(true)}>{title}</p>
+        )}
+      </div>
       <span className="hover:cursor-pointer">
         <CrossIcon />
       </span>
