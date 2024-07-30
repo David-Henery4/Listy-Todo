@@ -1,9 +1,9 @@
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 import Todo from "../todo/Todo";
+import { TempTodoSchema } from "./SortableContainer";
 
-const SortableTodo = (props) => {
-  console.log("Props",props)
+const SortableTodo = (props: TempTodoSchema) => {
   const {
     attributes,
     listeners,
@@ -20,7 +20,8 @@ const SortableTodo = (props) => {
   //
   return (
     <Todo
-      ref={{setNodeRef, setActivatorNodeRef}}
+      setNodeRef={setNodeRef}
+      setActivatorNodeRef={setActivatorNodeRef}
       style={style}
       {...props}
       {...attributes}

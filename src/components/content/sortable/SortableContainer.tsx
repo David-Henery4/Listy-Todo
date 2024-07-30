@@ -1,5 +1,7 @@
 "use client";
-import { useState, SetStateAction } from "react";
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import {
   closestCenter,
   DndContext,
@@ -22,24 +24,57 @@ import {
 
 import SortableTodo from "./SortableTodo";
 import Todo from "../todo/Todo";
+import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 
-interface TempTodoSchema {
-  id: number,
-  title: string
+export interface TempTodoSchema {
+  id: string;
+  userId: string;
+  title: string;
+  todoContent: string;
+  isCompleted: boolean;
+  listeners?: SyntheticListenerMap;
+  style?: {
+    transform: string | undefined;
+    transition: string | undefined;
+  };
+  setNodeRef?: (node: HTMLElement | null) => void;
+  setActivatorNodeRef?: (node: HTMLElement | null) => void;
 }
 
+type ActiveIdState = UniqueIdentifier | null;
+
 const SortableContainer = () => {
-  const [activeId, setActiveId] = useState<UniqueIdentifier>(0);
+  const [activeId, setActiveId] = useState<ActiveIdState>(null);
   const [activeItem, setActiveItem] = useState<TempTodoSchema>({
-    id: 0,
+    id: "",
     title: "",
+    userId: "",
+    todoContent: "",
+    isCompleted: false,
   });
-  const [items, setItems] = useState([
-    { id: 164533, title: "hello" },
-    { id: 7253543, title: "Goodbye" },
-    { id: 7345223, title: "Ciao" },
+  const [items, setItems] = useState<TempTodoSchema[]>([
+    {
+      id: uuidv4(),
+      title: "hello",
+      userId: "",
+      todoContent: "",
+      isCompleted: false,
+    },
+    {
+      id: uuidv4(),
+      title: "Goodbye",
+      userId: "",
+      todoContent: "",
+      isCompleted: false,
+    },
+    {
+      id: uuidv4(),
+      title: "Ciao",
+      userId: "",
+      todoContent: "",
+      isCompleted: true,
+    },
   ]);
-  // const [items, setItems] = useState(["1", "2", "3"]);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -48,7 +83,6 @@ const SortableContainer = () => {
   );
   //
   const handleDragStart = (event: DragStartEvent) => {
-    console.log(event);
     const { active } = event;
     setActiveId(active.id);
     setActiveItem(() => items.filter((item) => item.id === active.id)[0]);
@@ -57,12 +91,14 @@ const SortableContainer = () => {
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     //
-    if (active.id !== over.id) {
+    if (over !== null && active.id !== over.id) {
       setItems((items) => {
-        const testIndexOld = items.map((item) => item.id).indexOf(active.id);
-        const testIndexNew = items.map((item) => item.id).indexOf(over.id);
-        // const oldIndex = items.indexOf(active.id);
-        // const newIndex = items.indexOf(over.id);
+        const testIndexOld = items
+          .map((item) => item.id)
+          .indexOf(String(active.id));
+        const testIndexNew = items
+          .map((item) => item.id)
+          .indexOf(String(over.id));
         const newArray = arrayMove(items, testIndexOld, testIndexNew);
         return newArray;
       });
@@ -84,7 +120,7 @@ const SortableContainer = () => {
         })}
       </SortableContext>
       <DragOverlay>
-        {activeId ? <Todo title={activeItem.title} /> : null}
+        {activeId ? <Todo {...activeItem} /> : null}
       </DragOverlay>
     </DndContext>
   );

@@ -45,15 +45,16 @@ const config: Config = {
       veryDarkGrayishBlueDark_dark: "#4D5066",
       veryDarkGrayishBlueDark_dark_2: "#393A4C",
     },
-    backgroundImage: {
-      "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-      "gradient-conic":
-        "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-    },
     fontFamily: {
       joseSans: ["var(--jose-sans)"],
     },
-    extend: {},
+    extend: {
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+    },
   },
   plugins: [],
 };
