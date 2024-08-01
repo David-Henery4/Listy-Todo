@@ -1,9 +1,7 @@
 "use client";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-
 import { UserId } from "@/components/TodosContent";
-
 import {
   closestCenter,
   DndContext,
@@ -31,9 +29,11 @@ import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 export interface TempTodoSchema {
   id: string;
   userId: string;
-  title: string;
   todoContent: string;
   isCompleted: boolean;
+}
+
+export interface DnDTypes {
   listeners?: SyntheticListenerMap;
   style?: {
     transform: string | undefined;
@@ -41,7 +41,7 @@ export interface TempTodoSchema {
   };
   setNodeRef?: (node: HTMLElement | null) => void;
   setActivatorNodeRef?: (node: HTMLElement | null) => void;
-}
+} 
 
 type ActiveIdState = UniqueIdentifier | null;
 
@@ -49,7 +49,6 @@ const SortableContainer = ({userId}: UserId) => {
   const [activeId, setActiveId] = useState<ActiveIdState>(null);
   const [activeItem, setActiveItem] = useState<TempTodoSchema>({
     id: "",
-    title: "",
     userId: userId,
     todoContent: "",
     isCompleted: false,
@@ -57,23 +56,20 @@ const SortableContainer = ({userId}: UserId) => {
   const [items, setItems] = useState<TempTodoSchema[]>([
     {
       id: uuidv4(),
-      title: "hello",
       userId: userId,
-      todoContent: "",
+      todoContent: "hello",
       isCompleted: false,
     },
     {
       id: uuidv4(),
-      title: "Goodbye",
       userId: userId,
-      todoContent: "",
+      todoContent: "Goodbye",
       isCompleted: false,
     },
     {
       id: uuidv4(),
-      title: "Ciao",
       userId: userId,
-      todoContent: "",
+      todoContent: "Ciao",
       isCompleted: true,
     },
   ]);

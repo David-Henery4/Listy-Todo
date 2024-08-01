@@ -1,16 +1,16 @@
 {
-  "id": "4a84a001-c225-4786-9d36-0fa9b1fc3572",
+  "id": "e47ebe1e-ec2f-4819-bb1c-f688557343b3",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.todos_table": {
-      "name": "todos_table",
+    "public.todos_list": {
+      "name": "todos_list",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
           "notNull": true
         },
@@ -22,7 +22,7 @@
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -38,46 +38,10 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "todos_table_user_id_users_table_id_fk": {
-          "name": "todos_table_user_id_users_table_id_fk",
-          "tableFrom": "todos_table",
-          "tableTo": "users_table",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "public.users_table": {
-      "name": "users_table",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
         },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "email": {
-          "name": "email",
-          "type": "text",
+        "is_completed": {
+          "name": "is_completed",
+          "type": "boolean",
           "primaryKey": false,
           "notNull": true
         }
@@ -86,11 +50,11 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "users_table_email_unique": {
-          "name": "users_table_email_unique",
+        "todos_list_id_unique": {
+          "name": "todos_list_id_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "email"
+            "id"
           ]
         }
       }

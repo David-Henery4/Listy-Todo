@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-button, [role="button"]{
+[role="button"]{
   cursor: default !important;
 }

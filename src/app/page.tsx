@@ -14,11 +14,8 @@ export default async function Home() {
   }
   const userId = data.user.id
   console.log("userId: ", userId)
-  // const providerName = data.user.app_metadata.provider;
-  // const userData = data.user.user_metadata
-  // const userName =
-  //   providerName === "email" ? userData.first_name : userData.name;
-  // console.log(userName)
+  //
+  
   //
   return (
     // max-h-[300px]
@@ -32,3 +29,11 @@ export default async function Home() {
     </main>
   );
 }
+
+// const userId = data.user.id
+//   console.log("userId: ", userId)
+  // const providerName = data.user.app_metadata.provider;
+  // const userData = data.user.user_metadata
+  // const userName =
+  //   providerName === "email" ? userData.first_name : userData.name;
+  // console.log(userName)

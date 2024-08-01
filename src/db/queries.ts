@@ -1,39 +1,44 @@
 import { eq } from "drizzle-orm";
 import { db } from "./index";
 import {
-  InsertUser,
-  usersTable,
-  SelectUser,
-  todosTable,
+  todosList,
   SelectTodo,
   InsertTodo,
 } from "./schema";
-
-export async function createUser(data: InsertUser) {
-  await db.insert(usersTable).values(data);
-  return {msg: "done"}
-}
-
-export async function getUserById(
-  id: SelectUser["id"]
-): Promise<Array<{ id: number; name: string; email: string }>> {
-  return db.select().from(usersTable).where(eq(usersTable.id, id));
-}
-
-// getPostsByUserId
+import { UUID } from "crypto";
 
 // * Might do filters client side or with searchParams
 // if not:
 // getPostsByUserId & todo status (Active/Completed)
 
+// Works
 export async function createTodo(data: InsertTodo){
-  await db.insert(todosTable).values(data)
+  const res = await db.insert(todosList).values(data)
+  return {res, msg:"Done!"}
 }
 
+// Works (Tested with multiple userIds) - Works
+export async function getTodos(userId: UUID){
+  // Test UserId: 0dd470a4-e834-47c3-beb2-00c8fab41281
+  // await db.select().from()
+  const res = await db.query.todosList.findMany({
+    where: eq(todosList.userId, userId),
+  });
+  return { res, msg: "Done!" };
+}
+
+// Works 
 export async function updateTodo(id: SelectTodo["id"], data: Partial<Omit<SelectTodo, "id">>){
-  await db.update(todosTable).set(data).where(eq(todosTable.id, id))
+  // Test Id: 92870aa5-a61e-4235-bbe4-1b816953b79d
+  const res = await db
+    .update(todosList)
+    .set(data)
+    .where(eq(todosList.id, id));
+  return { res, msg: "Done!" };
 };
 
+// Works
 export async function deleteTodo(id: SelectTodo["id"]) {
-  await db.delete(todosTable).where(eq(todosTable.id, id))
+  const res = await db.delete(todosList).where(eq(todosList.id, id))
+  return { res, msg: "Deleted!" };
 }

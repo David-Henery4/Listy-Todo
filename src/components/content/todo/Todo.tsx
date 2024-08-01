@@ -4,11 +4,12 @@ import {
   DragHandleIcon,
   CheckIcon,
 } from "../../../../public/images";
-import { TempTodoSchema } from "../sortable/SortableContainer";
+import { TempTodoSchema, DnDTypes } from "../sortable/SortableContainer";
+
+type DnDAndTodoTypes = TempTodoSchema & DnDTypes;
 
 const Todo = ({
   id,
-  title,
   isCompleted,
   todoContent,
   userId,
@@ -16,7 +17,7 @@ const Todo = ({
   setNodeRef,
   setActivatorNodeRef,
   ...props
-}: TempTodoSchema) => {
+}: DnDAndTodoTypes) => {
   const [isEditing, setIsEditing] = useState(false);
   //
   // will convert text to input on click for editing
@@ -60,11 +61,13 @@ const Todo = ({
         ></div>
         {isEditing ? (
           <input
-            defaultValue={title}
+            defaultValue={todoContent}
             className="w-full h-full outline-none z-10 border-b border-b-black dark:border-b-white bg-white/0 dark:bg-todoBg_dark/0"
           />
         ) : (
-          <p className="w-full" onClick={() => setIsEditing(true)}>{title}</p>
+          <p className="w-full" onClick={() => setIsEditing(true)}>
+            {todoContent}
+          </p>
         )}
       </div>
       <span className="hover:cursor-pointer">

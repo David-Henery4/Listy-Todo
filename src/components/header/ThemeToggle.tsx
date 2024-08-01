@@ -16,7 +16,7 @@ const ThemeToggle = () => {
   }, []);
   //
   return (
-    <button onClick={() => handleThemeToggle()}>
+    <button className="hover:cursor-pointer" onClick={() => handleThemeToggle()}>
       <span className="hidden dark:block">{<SunIcon />}</span>
       <span className="block dark:hidden">{<MoonIcon />}</span>
       <span className="sr-only">
