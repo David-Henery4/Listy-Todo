@@ -33,6 +33,15 @@ export interface TempTodoSchema {
   isCompleted: boolean;
 }
 
+export interface TodoSchema {
+  id: string;
+  userId: string;
+  todoContent: string;
+  isCompleted: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface DnDTypes {
   listeners?: SyntheticListenerMap;
   style?: {
@@ -45,7 +54,13 @@ export interface DnDTypes {
 
 type ActiveIdState = UniqueIdentifier | null;
 
-const SortableContainer = ({userId}: UserId) => {
+interface SortableContainerProps extends UserId {
+  todosList: TodoSchema[]
+}
+
+// type SortableContainerProps = UserId & TodoSchema[]
+
+const SortableContainer = ({ userId, todosList }: SortableContainerProps) => {
   const [activeId, setActiveId] = useState<ActiveIdState>(null);
   const [activeItem, setActiveItem] = useState<TempTodoSchema>({
     id: "",
@@ -117,9 +132,7 @@ const SortableContainer = ({userId}: UserId) => {
           return <SortableTodo key={item.id} {...item} />;
         })}
       </SortableContext>
-      <DragOverlay>
-        {activeId ? <Todo {...activeItem} /> : null}
-      </DragOverlay>
+      <DragOverlay>{activeId ? <Todo {...activeItem} /> : null}</DragOverlay>
     </DndContext>
   );
 };

@@ -7,7 +7,7 @@ export interface UserId {
 const TodosContent = ({ userId }: UserId) => {
   return (
     <section className="w-full max-w-[540px] mx-auto relative px-6 mt-10">
-      <TodoInput />
+      <TodoInput userId={userId} />
 
       <TodosContainer userId={userId} />
 

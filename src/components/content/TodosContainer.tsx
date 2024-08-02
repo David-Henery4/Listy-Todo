@@ -5,14 +5,25 @@ import SortableContainer from "./sortable/SortableContainer";
 import { UserId } from "../TodosContent";
 import getTodosList from "@/actions/mutations/getTodosList";
 
-const TodosContainer = async ({userId}: UserId) => {
-  // const res = await getTodosList()
+const TodosContainer = async ({ userId }: UserId) => {
+  // const {res: todosList} = await getTodosList(userId)
   // console.log(res)
+  const ray = [
+    {
+      id: "",
+      userId: userId,
+      todoContent: "",
+      isCompleted: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ];
+  
   //
   return (
     <>
       <menu className="w-full mt-4 rounded-md bg-white shadow-lg smLap:mt-6 dark:bg-todoBg_dark">
-        <SortableContainer userId={userId} />
+        <SortableContainer userId={userId} todosList={ray} />
         {/* <Todo />
         <Todo />
         <Todo /> */}

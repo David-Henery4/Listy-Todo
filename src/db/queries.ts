@@ -18,7 +18,7 @@ export async function createTodo(data: InsertTodo){
 }
 
 // Works (Tested with multiple userIds) - Works
-export async function getTodos(userId: UUID){
+export async function getTodos(userId: string){
   // Test UserId: 0dd470a4-e834-47c3-beb2-00c8fab41281
   // await db.select().from()
   const res = await db.query.todosList.findMany({

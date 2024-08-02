@@ -1,21 +1,25 @@
-"use server"
-import { createTodo } from "@/db/queries"
-import { randomUUID, UUID } from "crypto"
+"use server";
+import { createTodo } from "@/db/queries";
+import { randomUUID, UUID } from "crypto";
+import { UserId } from "@/components/TodosContent";
 
 interface TodoCreation {
-  userId: UUID,
-  todoContent: string,
-  isCompleted: boolean
+  userId: UUID;
+  todoContent: string;
+  isCompleted: boolean;
 }
 
-const createTodoAction = async ({
-  userId,
-  todoContent,
-  isCompleted,
-}: TodoCreation) => {
+// {
+//   userId,
+//   todoContent,
+//   isCompleted,
+// }: TodoCreation
+
+const createTodoAction = async (userId: string, formData: FormData) => {
+  const todoContent = formData.get("todo-input");
   const res = await createTodo({
-    isCompleted,
-    todoContent,
+    isCompleted: false,
+    todoContent: `${todoContent}`,
     userId,
     id: randomUUID(),
     createdAt: new Date(),
@@ -24,4 +28,4 @@ const createTodoAction = async ({
   return res;
 };
 
-export default createTodoAction
+export default createTodoAction;
