@@ -1,29 +1,18 @@
 import Todo from "./todo/Todo";
 import TodosStatusBar from "./TodosStatusBar";
-import createUserAction from "@/actions/createUser";
 import SortableContainer from "./sortable/SortableContainer";
 import { UserId } from "../TodosContent";
 import getTodosList from "@/actions/mutations/getTodosList";
 
 const TodosContainer = async ({ userId }: UserId) => {
-  // const {res: todosList} = await getTodosList(userId)
-  // console.log(res)
-  const ray = [
-    {
-      id: "",
-      userId: userId,
-      todoContent: "",
-      isCompleted: false,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-  ];
-  
+  const {res: todosList} = await getTodosList(userId)  
+  console.log("testing Container");
+  console.log("Testing todosList: ", todosList)
   //
   return (
     <>
       <menu className="w-full mt-4 rounded-md bg-white shadow-lg smLap:mt-6 dark:bg-todoBg_dark">
-        <SortableContainer userId={userId} todosList={ray} />
+        <SortableContainer userId={userId} todosList={todosList} />
         {/* <Todo />
         <Todo />
         <Todo /> */}

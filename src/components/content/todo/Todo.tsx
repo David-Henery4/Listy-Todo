@@ -4,15 +4,18 @@ import {
   DragHandleIcon,
   CheckIcon,
 } from "../../../../public/images";
-import { TempTodoSchema, DnDTypes } from "../sortable/SortableContainer";
+import { TempTodoSchema, DnDTypes, TodoSchema } from "../sortable/SortableContainer";
+import { EditInput, StatusToggle, DeleteBtn } from "./todo-comps";
 
-type DnDAndTodoTypes = TempTodoSchema & DnDTypes;
+type DnDAndTodoTypes = TodoSchema & DnDTypes;
 
 const Todo = ({
   id,
   isCompleted,
   todoContent,
   userId,
+  createdAt,
+  updatedAt,
   listeners,
   setNodeRef,
   setActivatorNodeRef,
@@ -35,34 +38,16 @@ const Todo = ({
       >
         <DragHandleIcon className="fill-todoText_light dark:fill-todoText_dark" />
       </div>
-      <button
-        className={`w-7 h-7 rounded-full outline-none inline-grid place-items-center ${
-          isCompleted
-            ? "bg-gradient-to-br from-checkBackgroundBottom to-checkBackgroundTop"
-            : "border border-border_light dark:border-border_dark"
-        }`}
-      >
-        {isCompleted && (
-          <span>
-            <CheckIcon />
-          </span>
-        )}
-        <span className="sr-only">Toggle todo completed or uncompleted</span>
-      </button>
+      <StatusToggle isCompleted={isCompleted} id={id} />
       <div
         className="h-full flex-1 flex justify-start items-center text-xs text-todoText_light smLap:text-lg dark:text-todoText_dark hover:cursor-pointer"
         // onClick={() => setIsEditing(!isEditing)}
       >
-        <div
-          className={`fixed top-0 left-0 w-full h-full cursor-default ${
-            isEditing ? "block" : "hidden"
-          }`}
-          onClick={() => setIsEditing(false)}
-        ></div>
         {isEditing ? (
-          <input
-            defaultValue={todoContent}
-            className="w-full h-full outline-none z-10 border-b border-b-black dark:border-b-white bg-white/0 dark:bg-todoBg_dark/0"
+          <EditInput
+            id={id}
+            todoContent={todoContent}
+            setIsEditing={setIsEditing}
           />
         ) : (
           <p className="w-full" onClick={() => setIsEditing(true)}>
@@ -70,13 +55,9 @@ const Todo = ({
           </p>
         )}
       </div>
-      <span className="hover:cursor-pointer">
-        <CrossIcon />
-      </span>
+      <DeleteBtn id={id} />
     </li>
   );
 };
-
-Todo.displayName = "Todo";
 
 export default Todo;

@@ -1,9 +1,9 @@
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 import Todo from "../todo/Todo";
-import { TempTodoSchema } from "./SortableContainer";
+import { TempTodoSchema, TodoSchema } from "./SortableContainer";
 
-const SortableTodo = (props: TempTodoSchema) => {
+const SortableTodo = (props: TodoSchema) => {
   const {
     attributes,
     listeners,

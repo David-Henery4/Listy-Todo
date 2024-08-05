@@ -6,6 +6,7 @@ import {
   InsertTodo,
 } from "./schema";
 import { UUID } from "crypto";
+import { revalidatePath } from "next/cache";
 
 // * Might do filters client side or with searchParams
 // if not:
@@ -24,6 +25,7 @@ export async function getTodos(userId: string){
   const res = await db.query.todosList.findMany({
     where: eq(todosList.userId, userId),
   });
+  // revalidatePath("/", "page")
   return { res, msg: "Done!" };
 }
 
@@ -34,6 +36,7 @@ export async function updateTodo(id: SelectTodo["id"], data: Partial<Omit<Select
     .update(todosList)
     .set(data)
     .where(eq(todosList.id, id));
+  // revalidatePath("/", "page");
   return { res, msg: "Done!" };
 };
 

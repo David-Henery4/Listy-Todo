@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { UserId } from "@/components/TodosContent";
 import {
@@ -62,32 +62,15 @@ interface SortableContainerProps extends UserId {
 
 const SortableContainer = ({ userId, todosList }: SortableContainerProps) => {
   const [activeId, setActiveId] = useState<ActiveIdState>(null);
-  const [activeItem, setActiveItem] = useState<TempTodoSchema>({
+  const [activeItem, setActiveItem] = useState<TodoSchema>({
     id: "",
     userId: userId,
     todoContent: "",
     isCompleted: false,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   });
-  const [items, setItems] = useState<TempTodoSchema[]>([
-    {
-      id: uuidv4(),
-      userId: userId,
-      todoContent: "hello",
-      isCompleted: false,
-    },
-    {
-      id: uuidv4(),
-      userId: userId,
-      todoContent: "Goodbye",
-      isCompleted: false,
-    },
-    {
-      id: uuidv4(),
-      userId: userId,
-      todoContent: "Ciao",
-      isCompleted: true,
-    },
-  ]);
+  const [items, setItems] = useState<TodoSchema[]>(todosList);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -119,6 +102,10 @@ const SortableContainer = ({ userId, todosList }: SortableContainerProps) => {
     //
     setActiveId(null);
   };
+  //
+  useEffect(() => {
+    setItems(todosList)
+  }, [todosList])
   //
   return (
     <DndContext
