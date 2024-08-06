@@ -4,8 +4,6 @@ import { createClient } from "@/utils/supabase/server";
 import { Headerbar, TodosContent, HeaderImage } from "@/components";
 import { UUID } from "crypto";
 
-
-
 export default async function Home() {
   const supabase = createClient();
   //

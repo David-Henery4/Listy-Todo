@@ -1,24 +1,22 @@
+// "use client"
 import Input from "./input/Input";
-import createTodoAction from "@/actions/mutations/createTodo";
-import getTodosList from "@/actions/mutations/getTodosList";
-// import updateTodoAction from "@/actions/mutations/updateTodo";
-import deleteTodoAction from "@/actions/mutations/deleteTodoAction";
+import CreateSubmitBtn from "./submit/CreateSubmitBtn";
+import createTodoAction from "@/actions/mutations/createTodo"
 import { UserId } from "../TodosContent";
+import { useFormState } from "react-dom";
+import { useTransition } from "react";
 
 const TodoInput = ({userId}: UserId) => {
+  console.log("hello")
   const createTodoWithId = createTodoAction.bind(null, userId);
-  //
+  // const [isPending, startTransition] = useTransition()
+  // const [state, formAction] = useFormState(createTodoWithId, initialState);
+  // 460ms - 520ms
   return (
     // action={createTodoWithId}
     <form action={createTodoWithId} className="w-full">
       <div className="px-5 py-[14px] flex justify-start items-center rounded-md bg-white gap-3 smLap:px-6 smLap:py-5 dark:bg-todoBg_dark">
-        <button
-          type="submit"
-          // formAction={createTodoAction}
-          className="w-7 h-7 rounded-full border border-border_light hover:cursor-pointer dark:border-border_dark"
-        >
-          <span className="sr-only">Submit Todo Item</span>
-        </button>
+        <CreateSubmitBtn />
         <Input />
       </div>
     </form>

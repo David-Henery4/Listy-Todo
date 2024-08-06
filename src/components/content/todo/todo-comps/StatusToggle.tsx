@@ -1,6 +1,5 @@
 import { CheckIcon } from "../../../../../public/images";
 import { updateTodoStatusAction } from "@/actions/mutations/updateTodo";
-import { useRouter } from "next/navigation";
 
 interface StatusToggleTypes {
   isCompleted: boolean,
@@ -8,20 +7,12 @@ interface StatusToggleTypes {
 }
 
 const StatusToggle = ({ isCompleted, id }: StatusToggleTypes) => {
-  const router = useRouter()
-  console.log("testing")
   //
   return (
     <button
       onClick={async () => {
         const res = await updateTodoStatusAction(id, !isCompleted)
-        console.log(res.msg)
-        if (res.msg === "Done!"){
-          console.log("Completed")
-          // window.location.reload()
-          // router.push("/")
-          router.refresh()
-        }
+        console.log(res)
       }}
       className={`w-7 h-7 rounded-full outline-none inline-grid place-items-center ${
         isCompleted

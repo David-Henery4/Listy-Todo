@@ -5,7 +5,6 @@ import {
   SelectTodo,
   InsertTodo,
 } from "./schema";
-import { UUID } from "crypto";
 import { revalidatePath } from "next/cache";
 
 // * Might do filters client side or with searchParams
@@ -15,7 +14,8 @@ import { revalidatePath } from "next/cache";
 // Works
 export async function createTodo(data: InsertTodo){
   const res = await db.insert(todosList).values(data)
-  return {res, msg:"Done!"}
+  revalidatePath("/")
+  return {res, msg:"Created!"}
 }
 
 // Works (Tested with multiple userIds) - Works
@@ -26,7 +26,7 @@ export async function getTodos(userId: string){
     where: eq(todosList.userId, userId),
   });
   // revalidatePath("/", "page")
-  return { res, msg: "Done!" };
+  return { res, msg: "All lists here!" };
 }
 
 // Works 
@@ -36,12 +36,14 @@ export async function updateTodo(id: SelectTodo["id"], data: Partial<Omit<Select
     .update(todosList)
     .set(data)
     .where(eq(todosList.id, id));
+  revalidatePath("/");
   // revalidatePath("/", "page");
-  return { res, msg: "Done!" };
+  return { res, msg: "Updated!" };
 };
 
 // Works
 export async function deleteTodo(id: SelectTodo["id"]) {
   const res = await db.delete(todosList).where(eq(todosList.id, id))
+  revalidatePath("/");
   return { res, msg: "Deleted!" };
 }

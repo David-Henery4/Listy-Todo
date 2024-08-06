@@ -104,6 +104,7 @@ const SortableContainer = ({ userId, todosList }: SortableContainerProps) => {
   };
   //
   useEffect(() => {
+    // WAS THE PROBLEM!
     setItems(todosList)
   }, [todosList])
   //
