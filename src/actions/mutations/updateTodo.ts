@@ -1,5 +1,5 @@
 "use server";
-import { updateTodo } from "@/db/queries";
+import { updateTodo, resetAllTodoStatus } from "@/db/queries";
 import { SelectTodo } from "@/db/schema";
 
 const updateTodoContentAction = async (id: string, formData: FormData) => {
@@ -13,4 +13,9 @@ const updateTodoStatusAction = async (id: string, isCompleted: boolean) => {
   return res;
 };
 
-export { updateTodoContentAction, updateTodoStatusAction };
+const clearAllStatusAction = async (userid: string) => {
+  const res = await resetAllTodoStatus(userid)
+  return res
+}
+
+export { updateTodoContentAction, updateTodoStatusAction, clearAllStatusAction };
