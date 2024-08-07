@@ -54,8 +54,8 @@ export interface DnDTypes {
 
 type ActiveIdState = UniqueIdentifier | null;
 
-interface SortableContainerProps extends UserId {
-  todosList: TodoSchema[]
+interface SortableContainerProps extends Omit<UserId, "searchParams"> {
+  todosList: TodoSchema[];
 }
 
 // type SortableContainerProps = UserId & TodoSchema[]

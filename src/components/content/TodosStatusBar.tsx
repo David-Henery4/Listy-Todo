@@ -1,23 +1,48 @@
+import Link from "next/link";
+import { UserId } from "../TodosContent";
+import { SearchParamsTypes } from "@/app/page";
 
 interface screen {
-  size: "lg" | "sm"
+  size: "lg" | "sm";
+  searchParams: SearchParamsTypes["searchParams"];
 }
 
-const TodosStatusBar = ({size}: screen) => {
-  const isLapScreenOrAbove = size === "lg" ? true : false
+const TodosStatusBar = ({ size, searchParams }: screen) => {
+  console.log(searchParams.filter)
   return (
     <div
       className={`w-full py-4 mt-4 bg-white rounded-md shadow-lg justify-center items-center gap-[18px] font-bold text-sm text-labelGrey_light dark:text-dragNDropLabel_dark dark:bg-todoBg_dark ${
-        isLapScreenOrAbove
+        size === "lg"
           ? "hidden smLap:flex smLap:shadow-none smLap:bg-white/0 smLap:m-0 smLap:p-0 smLap:rounded-none"
           : "flex smLap:hidden"
       }`}
     >
-      <p className="text-brightBlue hover:cursor-pointer">All</p>
-      <p className=" hover:cursor-pointer">Active</p>
-      <p className=" hover:cursor-pointer">Completed</p>
+      <Link
+        href={{ pathname: "/", query: {} }}
+        className={`hover:cursor-pointer ${
+          !searchParams?.filter && "text-brightBlue"
+        }`}
+      >
+        All
+      </Link>
+      <Link
+        href={{ pathname: "/", query: { filter: "active" } }}
+        className={` hover:cursor-pointer ${
+          searchParams?.filter === "active" && "text-brightBlue"
+        }`}
+      >
+        Active
+      </Link>
+      <Link
+        href={{ pathname: "/", query: { filter: "completed" } }}
+        className={` hover:cursor-pointer ${
+          searchParams?.filter === "completed" && "text-brightBlue"
+        }`}
+      >
+        Completed
+      </Link>
     </div>
   );
-}
+};
 
-export default TodosStatusBar
+export default TodosStatusBar;

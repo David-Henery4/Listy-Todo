@@ -4,7 +4,14 @@ import { createClient } from "@/utils/supabase/server";
 import { Headerbar, TodosContent, HeaderImage } from "@/components";
 import { UUID } from "crypto";
 
-export default async function Home() {
+export interface SearchParamsTypes {
+  params: Record<PropertyKey, never>;
+  searchParams: { filter: "active" | "completed" } | Record<PropertyKey, never>;
+}
+
+export default async function Home({searchParams}: SearchParamsTypes) {
+  console.log(searchParams)
+  //
   const supabase = createClient();
   //
   const { data, error } = await supabase.auth.getUser();
@@ -12,9 +19,6 @@ export default async function Home() {
     redirect("/login");
   }
   const userId = data.user.id
-  console.log("userId: ", userId)
-  //
-  
   //
   return (
     // max-h-[300px]
@@ -24,7 +28,7 @@ export default async function Home() {
         <HeaderImage />
         <Headerbar />
       </header>
-      <TodosContent userId={userId} />
+      <TodosContent userId={userId} searchParams={searchParams} />
     </main>
   );
 }

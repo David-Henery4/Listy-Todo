@@ -1,16 +1,33 @@
 import TodosStatusBar from "./TodosStatusBar";
 import SortableContainer from "./sortable/SortableContainer";
 import { UserId } from "../TodosContent";
-import getTodosList from "@/actions/mutations/getTodosList";
+import {
+  getTodosList,
+  getAllActiveTodosAction,
+  getAllCompletedTodosAction,
+} from "@/actions/mutations/getTodosList";
 import ClearCompletedBtn from "./clear/ClearCompletedBtn";
+import { TodoSchema } from "./sortable/SortableContainer";
 
-const TodosContainer = async ({ userId }: UserId) => {
-  const {res: todosList} = await getTodosList(userId)
+const TodosContainer = async ({ userId, searchParams }: UserId) => {
+  // const { res: todosList } = await getTodosList(userId);
+  let todosList: TodoSchema[];
+  if (searchParams.filter === "active") {
+    const { res } = await getAllActiveTodosAction(userId);
+    todosList = res;
+  } else if (searchParams.filter === "completed") {
+    const { res } = await getAllCompletedTodosAction(userId);
+    todosList = res;
+  } else {
+    const { res } = await getTodosList(userId);
+    todosList = res;
+  }
+  //
   console.log(todosList)
   //
   const getCompletedTodosTotal = (): number => {
-    return todosList.filter((item) => !item.isCompleted).length
-  }
+    return todosList.filter((item) => !item.isCompleted).length;
+  };
   //
   return (
     <>
@@ -18,11 +35,11 @@ const TodosContainer = async ({ userId }: UserId) => {
         <SortableContainer userId={userId} todosList={todosList} />
         <li className="px-5 py-4 flex justify-between items-center text-xs text-labelGrey_light smLap:px-6 smLap:py-5 dark:text-dragNDropLabel_dark">
           <p className="min-w-max">{getCompletedTodosTotal()} items left</p>
-          <TodosStatusBar size="lg" />
-          <ClearCompletedBtn userId={userId}/>
+          <TodosStatusBar searchParams={searchParams} size="lg" />
+          <ClearCompletedBtn userId={userId} />
         </li>
       </menu>
-      <TodosStatusBar size="sm" />
+      <TodosStatusBar searchParams={searchParams} size="sm" />
     </>
   );
 };

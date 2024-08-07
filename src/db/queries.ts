@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { db } from "./index";
 import { todosList, SelectTodo, InsertTodo } from "./schema";
 import { revalidatePath } from "next/cache";
@@ -23,6 +23,20 @@ export async function getTodos(userId: string) {
   });
   // revalidatePath("/", "page")
   return { res, msg: "All lists here!" };
+}
+
+export async function getAllActiveTodos (userId: string) {
+  const res = await db.query.todosList.findMany({
+    where: and(eq(todosList.userId, userId), eq(todosList.isCompleted, false)),
+  });
+  return { res, msg: "All active todos here!" };
+}
+
+export async function getAllCompletedTodos(userId: string) {
+  const res = await db.query.todosList.findMany({
+    where: and(eq(todosList.userId, userId), eq(todosList.isCompleted, true)),
+  });
+  return { res, msg: "All Completed todos here!" };
 }
 
 // UPDATE
