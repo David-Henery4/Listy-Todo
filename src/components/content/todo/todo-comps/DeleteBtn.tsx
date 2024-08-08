@@ -1,15 +1,23 @@
 import { CrossIcon } from "../../../../../public/images";
 import deleteTodoAction from "@/actions/mutations/deleteTodoAction";
+import { Dispatch, SetStateAction } from "react";
+import { TodoSchema } from "../../sortable/SortableContainer";
 
 interface DeleteType {
-  id: string
+  id: string;
+  setItems?: Dispatch<SetStateAction<TodoSchema[]>>;
 }
 
-const DeleteBtn = ({id}: DeleteType) => {
+const DeleteBtn = ({id, setItems}: DeleteType) => {
   //
   const handleTodoDelete = async () => {
     const res = await deleteTodoAction(id)
     console.log(res?.msg)
+    if (setItems){
+      setItems((oldItems) => {
+        return oldItems.filter((item) => item.id !== id);
+      })
+    }
   }
   //
   return (

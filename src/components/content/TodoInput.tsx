@@ -16,7 +16,8 @@ const TodoInput = ({ userId }: Omit<UserId, "searchParams">) => {
     //
     const newFormData = new FormData(formData);
     const res = await createTodoAction(userId, newFormData)
-    console.log(res);
+    console.log(res?.msg);
+    setInputValue("")
   };
   //
   return (

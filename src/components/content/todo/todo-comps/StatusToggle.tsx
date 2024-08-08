@@ -1,18 +1,31 @@
 import { CheckIcon } from "../../../../../public/images";
 import { updateTodoStatusAction } from "@/actions/mutations/updateTodo";
+import { Dispatch, SetStateAction } from "react";
+import { TodoSchema } from "../../sortable/SortableContainer";
 
 interface StatusToggleTypes {
-  isCompleted: boolean,
-  id: string
+  isCompleted: boolean;
+  id: string;
+  setItems?: Dispatch<SetStateAction<TodoSchema[]>>;
 }
 
-const StatusToggle = ({ isCompleted, id }: StatusToggleTypes) => {
+const StatusToggle = ({ isCompleted, id, setItems }: StatusToggleTypes) => {
   //
   return (
     <button
       onClick={async () => {
         const res = await updateTodoStatusAction(id, !isCompleted)
         console.log(res?.msg)
+        if (setItems) {
+          setItems((oldItems) => {
+            return oldItems.map((item) => {
+              if (item.id === id){
+                item.isCompleted = !isCompleted
+              }
+              return item
+            });
+          });
+        }
       }}
       className={`w-7 h-7 rounded-full outline-none inline-grid place-items-center ${
         isCompleted

@@ -53,6 +53,13 @@ interface SortableContainerProps extends Omit<UserId, "searchParams"> {
   todosList: TodoSchema[];
 }
 
+// The Components in the "Todo" Components
+// "EditInput", "StatusToggle" & "DeleteBtn"
+// Have the "setItems" function to update the client side data
+// While the data gets saved to the database
+// Helps make the changes LOOK faster
+// But could be problems if errors occur when sending data
+
 const SortableContainer = ({ userId, todosList }: SortableContainerProps) => {
   const [activeId, setActiveId] = useState<ActiveIdState>(null);
   const [activeItem, setActiveItem] = useState<TodoSchema>({
@@ -129,7 +136,7 @@ const SortableContainer = ({ userId, todosList }: SortableContainerProps) => {
     >
       <SortableContext items={items} strategy={verticalListSortingStrategy}>
         {items.map((item) => {
-          return <SortableTodo key={item.id} {...item} />;
+          return <SortableTodo key={item.id} {...item} setItems={setItems} />;
         })}
       </SortableContext>
       <DragOverlay>{activeId ? <Todo {...activeItem} /> : null}</DragOverlay>

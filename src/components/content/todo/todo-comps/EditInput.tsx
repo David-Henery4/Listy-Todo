@@ -1,5 +1,6 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { updateTodoContentAction } from "@/actions/mutations/updateTodo";
+import { TodoSchema } from "../../sortable/SortableContainer";
 
 interface TodoContent {
   todoContent: string;
@@ -7,21 +8,62 @@ interface TodoContent {
   id: string;
 }
 
-const EditInput = ({ todoContent, setIsEditing, id }: TodoContent) => {
-  const updateTodoContentWithId = updateTodoContentAction.bind(null, id);
+interface TodoContentAndItemsList extends TodoContent {
+  setItems?: Dispatch<SetStateAction<TodoSchema[]>>;
+}
+
+const EditInput = ({
+  todoContent,
+  setIsEditing,
+  id,
+  setItems,
+}: TodoContentAndItemsList) => {
+  const [newInputValue, setNewInputValue] = useState(todoContent);
+  //
+  const handleSubmit = async (newData: EventTarget & HTMLFormElement) => {
+    if (newInputValue.trim().length <= 0) {
+      console.log("Input can't be empty");
+      setNewInputValue(todoContent);
+      setIsEditing(false);
+      return;
+    }
+    const newFormData = new FormData(newData);
+    const res = await updateTodoContentAction(id, newFormData);
+    console.log(res?.msg);
+    setIsEditing(false);
+    // Client update
+    if (setItems) {
+      setItems((oldItems) => {
+        return oldItems.map((item) => {
+          if (item.id === id) {
+            item.todoContent = newInputValue;
+          }
+          return item;
+        });
+      });
+    }
+    //
+  };
   //
   return (
-    <form action={updateTodoContentWithId} className="w-full h-full z-10">
+    // action={updateTodoContentWithId}
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit(e.currentTarget);
+      }}
+      className="w-full h-full z-10"
+    >
       <input
         autoFocus
         onBlur={(e) => {
           e.preventDefault();
           e.target.form?.requestSubmit();
-          setIsEditing(false);
         }}
         id="edit-todo"
         name="edit-todo"
-        defaultValue={todoContent}
+        value={newInputValue}
+        onChange={(e) => setNewInputValue(e.target.value)}
         className="w-full h-full outline-none border-b border-b-black dark:border-b-white bg-white/0 dark:bg-todoBg_dark/0"
       />
       <label
@@ -33,13 +75,3 @@ const EditInput = ({ todoContent, setIsEditing, id }: TodoContent) => {
 };
 
 export default EditInput;
-
-// Used for click off overlay
-/* <div
-    role="submit-button"
-    className={`fixed top-0 left-0 w-full h-full cursor-default ${
-      isEditing ? "block" : "hidden"
-    }`}
-    onClick={() => setIsEditing(false)}
-  ></div> 
-*/

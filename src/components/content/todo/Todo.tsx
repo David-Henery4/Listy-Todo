@@ -4,8 +4,13 @@ import {
 } from "../../../../public/images";
 import { DnDTypes, TodoSchema } from "../sortable/SortableContainer";
 import { EditInput, StatusToggle, DeleteBtn } from "./todo-comps";
+import { Dispatch, SetStateAction } from "react";
 
 type DnDAndTodoTypes = TodoSchema & DnDTypes;
+
+interface TodoPropsDnDAndItemsList extends DnDAndTodoTypes {
+  setItems?: Dispatch<SetStateAction<TodoSchema[]>>;
+}
 
 const Todo = ({
   id,
@@ -18,8 +23,10 @@ const Todo = ({
   orderNumber,
   setNodeRef,
   setActivatorNodeRef,
+  setItems,
+  // items,
   ...props
-}: DnDAndTodoTypes) => {
+}: TodoPropsDnDAndItemsList) => {
   const [isEditing, setIsEditing] = useState(false);
   //
   return (
@@ -35,15 +42,14 @@ const Todo = ({
       >
         <DragHandleIcon className="fill-todoText_light dark:fill-todoText_dark" />
       </div>
-      <StatusToggle isCompleted={isCompleted} id={id} />
-      <div
-        className="h-full flex-1 flex justify-start items-center text-xs text-todoText_light smLap:text-lg dark:text-todoText_dark hover:cursor-pointer"
-      >
+      <StatusToggle setItems={setItems} isCompleted={isCompleted} id={id} />
+      <div className="h-full flex-1 flex justify-start items-center text-xs text-todoText_light smLap:text-lg dark:text-todoText_dark hover:cursor-pointer">
         {isEditing ? (
           <EditInput
             id={id}
             todoContent={todoContent}
             setIsEditing={setIsEditing}
+            setItems={setItems}
           />
         ) : (
           <p className="w-full" onClick={() => setIsEditing(true)}>
@@ -51,7 +57,7 @@ const Todo = ({
           </p>
         )}
       </div>
-      <DeleteBtn id={id} />
+      <DeleteBtn setItems={setItems} id={id} />
     </li>
   );
 };
