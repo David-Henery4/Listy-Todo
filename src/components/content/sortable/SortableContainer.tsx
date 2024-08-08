@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { UserId } from "@/components/TodosContent";
 import { updateListOrder } from "@/actions/mutations/updateTodo";
 import {
@@ -35,6 +34,7 @@ export interface TodoSchema {
   isCompleted: boolean;
   createdAt: Date;
   updatedAt: Date;
+  orderNumber: number
 }
 
 export interface DnDTypes {
@@ -53,8 +53,6 @@ interface SortableContainerProps extends Omit<UserId, "searchParams"> {
   todosList: TodoSchema[];
 }
 
-// type SortableContainerProps = UserId & TodoSchema[]
-
 const SortableContainer = ({ userId, todosList }: SortableContainerProps) => {
   const [activeId, setActiveId] = useState<ActiveIdState>(null);
   const [activeItem, setActiveItem] = useState<TodoSchema>({
@@ -64,6 +62,7 @@ const SortableContainer = ({ userId, todosList }: SortableContainerProps) => {
     isCompleted: false,
     createdAt: new Date(),
     updatedAt: new Date(),
+    orderNumber: todosList.length + 1
   });
   const [items, setItems] = useState<TodoSchema[]>(todosList);
   const sensors = useSensors(
@@ -94,28 +93,20 @@ const SortableContainer = ({ userId, todosList }: SortableContainerProps) => {
           .indexOf(String(over.id));
 
         const newArray = arrayMove(items, testIndexOld, testIndexNew);
-        console.log(
-          newArray,
-          `testIndexOld: ${testIndexOld}`,
-          `testIndexNew: ${testIndexNew}`
-        );
 
-        //// Check for order number update
-        const rayWithIndex = newArray.map((item,i,_) => {
-          return {...item, order: i}
+        //Check for order number update
+        const newArrayWithNewOrderNumber = newArray.map((item,i,_) => {
+          return {...item, orderNumber: i}
         })
-        console.log("Array with order: ", rayWithIndex)
-        ////
-
-
-        return newArray;
+        
+        return newArrayWithNewOrderNumber;
       });
     }
     //
     setActiveId(null);
   };
   //
-  const saveUpdatedListOrder = async (rayWithIndex) => {
+  const saveUpdatedListOrder = async (rayWithIndex: TodoSchema[]) => {
     const res = await updateListOrder(userId, rayWithIndex);
     console.log(res)
   };

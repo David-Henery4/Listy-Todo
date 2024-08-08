@@ -19,8 +19,9 @@ const clearAllStatusAction = async (userid: string) => {
   return res
 }
 
-const updateListOrder = async (userId: string, listItems) => {
+const updateListOrder = async (userId: string, listItems: SelectTodo[]) => {
   const res = await updateOrderNumber(userId, listItems)
+  return res
 }
 
 export { updateTodoContentAction, updateTodoStatusAction, clearAllStatusAction, updateListOrder };

@@ -3,10 +3,6 @@ import { db } from "./index";
 import { todosList, SelectTodo, InsertTodo } from "./schema";
 import { revalidatePath } from "next/cache";
 
-// * Might do filters client side or with searchParams
-// if not:
-// getPostsByUserId & todo status (Active/Completed)
-
 // CREATE
 export async function createTodo(data: InsertTodo) {
   const res = await db.insert(todosList).values(data);
@@ -16,12 +12,9 @@ export async function createTodo(data: InsertTodo) {
 
 // GET
 export async function getTodos(userId: string) {
-  // Test UserId: 0dd470a4-e834-47c3-beb2-00c8fab41281
-  // await db.select().from()
   const res = await db.query.todosList.findMany({
     where: eq(todosList.userId, userId),
   });
-  // revalidatePath("/", "page")
   return { res, msg: "All lists here!" };
 }
 
@@ -44,10 +37,9 @@ export async function updateTodo(
   id: SelectTodo["id"],
   data: Partial<Omit<SelectTodo, "id">>
 ) {
-  // Test Id: 92870aa5-a61e-4235-bbe4-1b816953b79d
+  //
   const res = await db.update(todosList).set(data).where(eq(todosList.id, id));
   revalidatePath("/");
-  // revalidatePath("/", "page");
   return { res, msg: "Updated!" };
 }
 
@@ -55,16 +47,26 @@ export async function updateOrderNumber(
   userId: string,
   itemsList: SelectTodo[]
 ) {
-  console.log("userId: ", userId)
-  console.log("itemsList: ", itemsList)
-  // for (const item of itemsList) {
-  //   await db
-  //     .update(todosList)
-  //     .set({ order: item.order })
-  //     .where(eq(todosList.userId, userId));
-  // }
-  // revalidatePath("/");
-  // return { msg: "Cleared All!" };
+  //
+  if (itemsList.length <= 0) return 
+
+  const updates = itemsList.map((item) => {
+    return {
+      id: item.id,
+      orderNumber: item.orderNumber,
+    };
+  });
+
+  await db.transaction(async (tx) => {
+    for (const update of updates) {
+      await tx
+        .update(todosList)
+        .set({ orderNumber: update.orderNumber })
+        .where(and(eq(todosList.id, update.id), eq(todosList.userId, userId)));
+    }
+  });
+  //
+  return { msg: "Cleared All!" };
 }
 
 export async function resetAllTodoStatus(userId: string) {

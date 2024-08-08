@@ -1,8 +1,6 @@
 import { useState } from "react";
 import {
-  CrossIcon,
   DragHandleIcon,
-  CheckIcon,
 } from "../../../../public/images";
 import { DnDTypes, TodoSchema } from "../sortable/SortableContainer";
 import { EditInput, StatusToggle, DeleteBtn } from "./todo-comps";
@@ -17,13 +15,12 @@ const Todo = ({
   createdAt,
   updatedAt,
   listeners,
+  orderNumber,
   setNodeRef,
   setActivatorNodeRef,
   ...props
 }: DnDAndTodoTypes) => {
   const [isEditing, setIsEditing] = useState(false);
-  //
-  // will convert text to input on click for editing
   //
   return (
     <li
@@ -41,7 +38,6 @@ const Todo = ({
       <StatusToggle isCompleted={isCompleted} id={id} />
       <div
         className="h-full flex-1 flex justify-start items-center text-xs text-todoText_light smLap:text-lg dark:text-todoText_dark hover:cursor-pointer"
-        // onClick={() => setIsEditing(!isEditing)}
       >
         {isEditing ? (
           <EditInput

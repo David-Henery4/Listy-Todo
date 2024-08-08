@@ -8,6 +8,13 @@
       "when": 1722516165935,
       "tag": "0000_equal_photon",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1723124427906,
+      "tag": "0001_curvy_silver_fox",
+      "breakpoints": true
     }
   ]
 }

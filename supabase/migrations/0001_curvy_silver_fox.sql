@@ -1,0 +1,1 @@
+ALTER TABLE "todos_list" ADD COLUMN "order_number" integer NOT NULL;

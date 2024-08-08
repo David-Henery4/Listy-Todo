@@ -14,13 +14,13 @@ const TodosContainer = async ({ userId, searchParams }: UserId) => {
   let todosList: TodoSchema[];
   if (searchParams.filter === "active") {
     const { res } = await getAllActiveTodosAction(userId);
-    todosList = res;
+    todosList = res.sort((a,b) => a.orderNumber - b.orderNumber) // implement sort here
   } else if (searchParams.filter === "completed") {
     const { res } = await getAllCompletedTodosAction(userId);
-    todosList = res;
+    todosList = res.sort((a, b) => a.orderNumber - b.orderNumber);
   } else {
     const { res } = await getTodosList(userId);
-    todosList = res;
+    todosList = res.sort((a, b) => a.orderNumber - b.orderNumber);
   }
   //
   // console.log(todosList)
