@@ -9,7 +9,7 @@ const DeleteBtn = ({id}: DeleteType) => {
   //
   const handleTodoDelete = async () => {
     const res = await deleteTodoAction(id)
-    console.log(res)
+    console.log(res?.msg)
   }
   //
   return (

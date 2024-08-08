@@ -66,7 +66,7 @@ export async function updateOrderNumber(
     }
   });
   //
-  return { msg: "Cleared All!" };
+  return { msg: "Updated List order" };
 }
 
 export async function resetAllTodoStatus(userId: string) {

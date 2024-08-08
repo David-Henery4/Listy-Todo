@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { UserId } from "../TodosContent";
 import { SearchParamsTypes } from "@/app/page";
 
 interface screen {
@@ -8,7 +7,7 @@ interface screen {
 }
 
 const TodosStatusBar = ({ size, searchParams }: screen) => {
-  console.log(searchParams.filter)
+  //
   return (
     <div
       className={`w-full py-4 mt-4 bg-white rounded-md shadow-lg justify-center items-center gap-[18px] font-bold text-sm text-labelGrey_light dark:text-dragNDropLabel_dark dark:bg-todoBg_dark ${

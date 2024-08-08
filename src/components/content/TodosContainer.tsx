@@ -23,8 +23,6 @@ const TodosContainer = async ({ userId, searchParams }: UserId) => {
     todosList = res.sort((a, b) => a.orderNumber - b.orderNumber);
   }
   //
-  // console.log(todosList)
-  //
   const getCompletedTodosTotal = (): number => {
     return todosList.filter((item) => !item.isCompleted).length;
   };

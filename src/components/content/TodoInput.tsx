@@ -1,22 +1,33 @@
-// "use client"
+"use client"
 import Input from "./input/Input";
 import CreateSubmitBtn from "./submit/CreateSubmitBtn";
 import createTodoAction from "@/actions/mutations/createTodo"
 import { UserId } from "../TodosContent";
-import { useFormState } from "react-dom";
-import { useTransition } from "react";
+import { useState} from "react";
 
 const TodoInput = ({ userId }: Omit<UserId, "searchParams">) => {
-  const createTodoWithId = createTodoAction.bind(null, userId);
-  // const [isPending, startTransition] = useTransition()
-  // const [state, formAction] = useFormState(createTodoWithId, initialState);
-  // 460ms - 520ms
+  const [inputValue, setInputValue] = useState("")
+  //
+  const handleSubmit = async (formData: EventTarget & HTMLFormElement) => {
+    if (inputValue.trim().length <= 0) {
+      console.log("Todo can't be empty, please enter value")
+      return
+    }
+    //
+    const newFormData = new FormData(formData);
+    const res = await createTodoAction(userId, newFormData)
+    console.log(res);
+  };
+  //
   return (
     // action={createTodoWithId}
-    <form action={createTodoWithId} className="w-full">
+    <form onSubmit={(e) => {
+      e.preventDefault()
+      handleSubmit(e.currentTarget)
+    }} className="w-full">
       <div className="px-5 py-[14px] flex justify-start items-center rounded-md bg-white gap-3 smLap:px-6 smLap:py-5 dark:bg-todoBg_dark">
-        <CreateSubmitBtn />
-        <Input />
+        <CreateSubmitBtn  />
+        <Input inputValue={inputValue} setInputValue={setInputValue} />
       </div>
     </form>
   );
@@ -24,18 +35,3 @@ const TodoInput = ({ userId }: Omit<UserId, "searchParams">) => {
 
 export default TodoInput;
 
-// Works?
-// const res = await deleteTodoAction()
-// console.log("Created Something: ", res)
-
-// Works
-// const res = await updateTodoAction()
-// console.log("Created Something: ", res)
-
-// Works (Needs to be tested with multiple userIds)
-// const res = await getTodosList()
-// console.log("Created Something: ", res)
-
-// Works
-// const res = await createTodoAction()
-// console.log("Created Something: ", res)

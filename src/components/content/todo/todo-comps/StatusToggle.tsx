@@ -12,7 +12,7 @@ const StatusToggle = ({ isCompleted, id }: StatusToggleTypes) => {
     <button
       onClick={async () => {
         const res = await updateTodoStatusAction(id, !isCompleted)
-        console.log(res)
+        console.log(res?.msg)
       }}
       className={`w-7 h-7 rounded-full outline-none inline-grid place-items-center ${
         isCompleted

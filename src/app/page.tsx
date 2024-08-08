@@ -10,7 +10,6 @@ export interface SearchParamsTypes {
 }
 
 export default async function Home({searchParams}: SearchParamsTypes) {
-  console.log(searchParams)
   //
   const supabase = createClient();
   //
@@ -32,11 +31,3 @@ export default async function Home({searchParams}: SearchParamsTypes) {
     </main>
   );
 }
-
-// const userId = data.user.id
-//   console.log("userId: ", userId)
-  // const providerName = data.user.app_metadata.provider;
-  // const userData = data.user.user_metadata
-  // const userName =
-  //   providerName === "email" ? userData.first_name : userData.name;
-  // console.log(userName)

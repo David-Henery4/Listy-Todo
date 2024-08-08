@@ -4,9 +4,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 
 export async function login(formData: FormData) {
-  console.log("FormData: ", formData);
   const supabase = createClient();
-  console.log(formData.get("display_name"));
   //
   // type-casting here for convenience
   // in practice, you should validate your inputs
@@ -30,8 +28,6 @@ export async function login(formData: FormData) {
 
 export async function signup(formData: FormData) {
   const supabase = createClient();
-  console.log("signup called");
-  console.log(formData.get("display_name"));
   //
   // type-casting here for convenience
   // in practice, you should validate your inputs
