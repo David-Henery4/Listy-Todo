@@ -23,7 +23,7 @@ const TodosContainer = async ({ userId, searchParams }: UserId) => {
     todosList = res;
   }
   //
-  console.log(todosList)
+  // console.log(todosList)
   //
   const getCompletedTodosTotal = (): number => {
     return todosList.filter((item) => !item.isCompleted).length;

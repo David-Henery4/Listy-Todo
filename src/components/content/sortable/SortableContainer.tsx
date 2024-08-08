@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { UserId } from "@/components/TodosContent";
+import { updateListOrder } from "@/actions/mutations/updateTodo";
 import {
   closestCenter,
   DndContext,
@@ -26,12 +27,6 @@ import SortableTodo from "./SortableTodo";
 import Todo from "../todo/Todo";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 
-export interface TempTodoSchema {
-  id: string;
-  userId: string;
-  todoContent: string;
-  isCompleted: boolean;
-}
 
 export interface TodoSchema {
   id: string;
@@ -89,19 +84,45 @@ const SortableContainer = ({ userId, todosList }: SortableContainerProps) => {
     //
     if (over !== null && active.id !== over.id) {
       setItems((items) => {
+
         const testIndexOld = items
           .map((item) => item.id)
           .indexOf(String(active.id));
+
         const testIndexNew = items
           .map((item) => item.id)
           .indexOf(String(over.id));
+
         const newArray = arrayMove(items, testIndexOld, testIndexNew);
+        console.log(
+          newArray,
+          `testIndexOld: ${testIndexOld}`,
+          `testIndexNew: ${testIndexNew}`
+        );
+
+        //// Check for order number update
+        const rayWithIndex = newArray.map((item,i,_) => {
+          return {...item, order: i}
+        })
+        console.log("Array with order: ", rayWithIndex)
+        ////
+
+
         return newArray;
       });
     }
     //
     setActiveId(null);
   };
+  //
+  const saveUpdatedListOrder = async (rayWithIndex) => {
+    const res = await updateListOrder(userId, rayWithIndex);
+    console.log(res)
+  };
+  //
+  useEffect(() => {
+    saveUpdatedListOrder(items)
+  }, [items])
   //
   useEffect(() => {
     // WAS THE PROBLEM!

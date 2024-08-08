@@ -7,7 +7,6 @@ import { useFormState } from "react-dom";
 import { useTransition } from "react";
 
 const TodoInput = ({ userId }: Omit<UserId, "searchParams">) => {
-  console.log("hello");
   const createTodoWithId = createTodoAction.bind(null, userId);
   // const [isPending, startTransition] = useTransition()
   // const [state, formAction] = useFormState(createTodoWithId, initialState);

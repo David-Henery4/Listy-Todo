@@ -4,7 +4,7 @@ import {
   DragHandleIcon,
   CheckIcon,
 } from "../../../../public/images";
-import { TempTodoSchema, DnDTypes, TodoSchema } from "../sortable/SortableContainer";
+import { DnDTypes, TodoSchema } from "../sortable/SortableContainer";
 import { EditInput, StatusToggle, DeleteBtn } from "./todo-comps";
 
 type DnDAndTodoTypes = TodoSchema & DnDTypes;

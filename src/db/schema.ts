@@ -11,6 +11,7 @@ export const todosList = pgTable("todos_list", {
     .notNull()
     .$onUpdate(() => new Date()),
   isCompleted: boolean("is_completed").notNull(),
+  // orderNumber: integer("order_number"),
 });
 
 // id: string;

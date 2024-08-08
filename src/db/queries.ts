@@ -25,7 +25,7 @@ export async function getTodos(userId: string) {
   return { res, msg: "All lists here!" };
 }
 
-export async function getAllActiveTodos (userId: string) {
+export async function getAllActiveTodos(userId: string) {
   const res = await db.query.todosList.findMany({
     where: and(eq(todosList.userId, userId), eq(todosList.isCompleted, false)),
   });
@@ -49,6 +49,22 @@ export async function updateTodo(
   revalidatePath("/");
   // revalidatePath("/", "page");
   return { res, msg: "Updated!" };
+}
+
+export async function updateOrderNumber(
+  userId: string,
+  itemsList: SelectTodo[]
+) {
+  console.log("userId: ", userId)
+  console.log("itemsList: ", itemsList)
+  // for (const item of itemsList) {
+  //   await db
+  //     .update(todosList)
+  //     .set({ order: item.order })
+  //     .where(eq(todosList.userId, userId));
+  // }
+  // revalidatePath("/");
+  // return { msg: "Cleared All!" };
 }
 
 export async function resetAllTodoStatus(userId: string) {
