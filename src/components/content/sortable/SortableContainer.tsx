@@ -13,7 +13,6 @@ import {
   UniqueIdentifier,
   useSensor,
   useSensors,
-  Active,
 } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -69,9 +68,10 @@ const SortableContainer = ({ userId, todosList }: SortableContainerProps) => {
     isCompleted: false,
     createdAt: new Date(),
     updatedAt: new Date(),
-    orderNumber: todosList.length + 1
+    orderNumber: todosList.length + 1,
   });
   const [items, setItems] = useState<TodoSchema[]>(todosList);
+  //
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -90,7 +90,6 @@ const SortableContainer = ({ userId, todosList }: SortableContainerProps) => {
     //
     if (over !== null && active.id !== over.id) {
       setItems((items) => {
-
         const testIndexOld = items
           .map((item) => item.id)
           .indexOf(String(active.id));
@@ -102,10 +101,10 @@ const SortableContainer = ({ userId, todosList }: SortableContainerProps) => {
         const newArray = arrayMove(items, testIndexOld, testIndexNew);
 
         //Check for order number update
-        const newArrayWithNewOrderNumber = newArray.map((item,i,_) => {
-          return {...item, orderNumber: i}
-        })
-        
+        const newArrayWithNewOrderNumber = newArray.map((item, i, _) => {
+          return { ...item, orderNumber: i };
+        });
+
         return newArrayWithNewOrderNumber;
       });
     }
@@ -113,19 +112,17 @@ const SortableContainer = ({ userId, todosList }: SortableContainerProps) => {
     setActiveId(null);
   };
   //
-  const saveUpdatedListOrder = async (rayWithIndex: TodoSchema[]) => {
-    const res = await updateListOrder(userId, rayWithIndex);
-    console.log(res)
-  };
-  //
   useEffect(() => {
-    saveUpdatedListOrder(items)
-  }, [items])
+    async function saveUpdatedListOrder(rayWithIndex: TodoSchema[]) {
+      await updateListOrder(userId, rayWithIndex);
+    }
+    saveUpdatedListOrder(items);
+  }, [items]); // eslint-disable-line react-hooks/exhaustive-deps
   //
   useEffect(() => {
     // WAS THE PROBLEM!
-    setItems(todosList)
-  }, [todosList])
+    setItems(todosList);
+  }, [todosList]);
   //
   return (
     <DndContext
