@@ -43,6 +43,9 @@ const Form = () => {
       msg: "",
     });
   //
+  const demoEmail = process.env.NEXT_PUBLIC_DEMO_EMAIL;
+  const demoPassword = process.env.NEXT_PUBLIC_DEMO_PASSWORD;
+  //
   const createNewFormData = (): FormData => {
     const newFormData = new FormData();
     const formKeysAndValues = Object.entries(formValues);
@@ -68,9 +71,10 @@ const Form = () => {
   //
   const handleDemoLogin = async () => {
     const newFormData = new FormData();
-    // Might hide in env variables
-    newFormData.append("email", "demo1234@demo.com")
-    newFormData.append("password", "demo1234")
+    if (demoEmail !== undefined && demoPassword !== undefined){
+      newFormData.append("email", demoEmail);
+      newFormData.append("password", demoPassword);
+    }
     const res = await login(newFormData);
     handleSubmitError(res, setLoginOrSignupError);
   }

@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning lang="en" className={`${jose.variable}`}>
-      <body className="font-joseSans bg-veryLightGray_light dark:bg-backgroundBody_dark">
+      <body className="font-joseSans bg-creamBg_light dark:bg-backgroundBody_dark">
         <ThemeProvider attribute="class">{children}</ThemeProvider>
       </body>
     </html>

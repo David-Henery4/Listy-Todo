@@ -16,10 +16,12 @@ const config: Config = {
       errorRed: "#d92828",
       black: "#000000",
       brightBlue: "#3A7BFD",
+      darkishOrange: "#ff981b",
       checkBackgroundBottom: "#57DDFF",
       checkBackgroundTop: "#C058F3",
       //
       veryLightGray_light: "#FAFAFA",
+      creamBg_light: "#EFEDED",
       veryLightGrayishBlue_light: "#E4E5F1",
       lightGrayishBlue_light: "#D2D3DB",
       darkGrayishBlue_light: "#9394A5",
@@ -56,6 +58,9 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      objectPosition: {
+        "center-top": "50% 30%",
       },
     },
   },

@@ -3,6 +3,9 @@ import bgDesktopDark from "./bg-desktop-dark.jpg"
 import bgDesktopLight from "./bg-desktop-light.jpg"
 import bgMobileDark from "./bg-mobile-dark.jpg"
 import bgMobileLight from "./bg-mobile-light.jpg"
+//
+import bgImageGrainLight from "./cliff-face-with-sea-overlay-grain.jpg"
+import bgImageGrainDark from "./night-car-at-crossing-overlay-grain.jpg"
 
 // SVGS //
 import CheckIcon from "./icon-check.svg"
@@ -20,6 +23,8 @@ export {
   bgDesktopLight,
   bgMobileDark,
   bgMobileLight,
+  bgImageGrainDark,
+  bgImageGrainLight,
   // Svgs
   CheckIcon,
   CrossIcon,

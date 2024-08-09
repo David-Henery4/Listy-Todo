@@ -4,7 +4,7 @@ import ProviderBtn from "@/components/login/provider-btn/ProviderBtn";
 const LoginPage = () => {
   return (
     <main className="flex justify-start items-center flex-col py-12 px-6 text-center text-todoText_light dark:text-white">
-      <h1 className="text-6xl">Todo List</h1>
+      <h1 className="text-6xl text-brightBlue">Todo List</h1>
       <h2 className="text-4xl font-light mt-8">Login</h2>
 
       <div className="w-full mt-6 p-6 rounded-md shadow-md max-w-[450px] bg-white smLap:p-10 dark:bg-todoBg_dark">

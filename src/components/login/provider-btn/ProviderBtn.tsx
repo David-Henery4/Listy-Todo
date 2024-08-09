@@ -9,10 +9,10 @@ interface ProviderBtn {
 const ProviderBtn = ({ providerName }: ProviderBtn) => {
   return (
     <button
-      className={`w-full relative inline-flex justify-start items-center gap-2 overflow-hidden px-4 py-6 rounded-md text-todoText_dark hover:after:absolute hover:after:w-full hover:after:h-full hover:after:top-0 hover:after:left-0 hover:after:bg-white/15 ${
+      className={`w-full relative inline-flex justify-start items-center gap-2 overflow-hidden px-4 py-6 rounded-md text-white hover:after:absolute hover:after:w-full hover:after:h-full hover:after:top-0 hover:after:left-0 hover:after:bg-white/15 ${
         providerName === "google"
-          ? "bg-veryDarkNavy_dark active:bg-veryDarkNavy_dark"
-          : "bg-black active:bg-black"
+          ? "bg-darkishOrange active:bg-darkishOrange"
+          : "bg-brightBlue active:bg-brightBlue"
       }`}
       onClick={() => {
         if (providerName === "google") signinWithGoogle();
