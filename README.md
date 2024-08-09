@@ -1,6 +1,4 @@
-# Frontend Mentor - Todo app solution
-
-This is a solution to the [Todo app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/todo-app-Su1_KokOW). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
+# Todo app
 
 ## Table of contents
 
@@ -14,15 +12,11 @@ This is a solution to the [Todo app challenge on Frontend Mentor](https://www.fr
   - [Continued development](#continued-development)
   - [Useful resources](#useful-resources)
 - [Author](#author)
-- [Acknowledgments](#acknowledgments)
 
-**Note: Delete this note and update the table of contents based on what sections you keep.**
 
 ## Overview
 
-### The challenge
-
-Users should be able to:
+Users can:
 
 - View the optimal layout for the app depending on their device's screen size
 - See hover states for all interactive elements on the page
@@ -36,17 +30,11 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
-
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
-
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it. 
-
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
-
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
+![light-laptop-screenshot](./screenshot/light-laptop-screenshot.png)
 
 ### Links
+
+TO BE ADDED
 
 - Solution URL: [Add solution URL here](https://your-solution-url.com)
 - Live Site URL: [Add live site URL here](https://your-live-site-url.com)
@@ -62,11 +50,17 @@ Then crop/optimize/edit your image however you like, add it to your project, and
 - Mobile-first workflow
 - [React](https://reactjs.org/) - JS library
 - [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
+- [Typescript](https://www.typescriptlang.org/) - Type safety
+- [TailwindCSS](https://tailwindcss.com/) - For CSS Utility classes
+- [Drizzle](https://orm.drizzle.team/) - Communicating with a relational database
+- [Supabase](https://supabase.com/) - Postgres Relational Database & Auth
+- [dnd-kit](https://docs.dndkit.com/) - Drag & Drop functionality
+- [next-themes](https://www.npmjs.com/package/next-themes) - For light & dark themes
 
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
 
 ### What I learned
+
+NEEDS TO BE DONE!!!!
 
 Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
 
@@ -86,33 +80,26 @@ const proudOfThisFunc = () => {
 }
 ```
 
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
-
-**Note: Delete this note and the content within this section and replace with your own learnings.**
-
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
+The two main takeaways from the project were the use of relational databases and Typescript.
 
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
+I know I have only touched the surface of learning about relational databases, their concepts, the differents types (postgres, mySQL etc), their uses and how powerful they can be and I looking forward to learning more about them and using them in future Projects. I also feel that it is an important skill to learn as relation databses seem to be so widely used.
+
+Typescript is something I have little experience with as well, but already I'm seeing the benefits of using it in my projects. I plan to use it in all my future Javascript based projects going forward. 
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
+- [Drizzle Documentation](https://orm.drizzle.team/docs/overview) - As this was my first time working with a relational database and an ORM, I had to use this to set up and connect to the database.
 
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
+- [Supabase Documentation](https://supabase.com/docs) - I used the supabase documentation to set up my postgres database and manage it. I had to use it quite a bit when creating tables and setting up the projects auth.
+
+- [Typescript documentation](https://www.typescriptlang.org/docs/) - The documentation was something I referenced frequently when I had different type errors I couldn't figure out how to handle.
+
+- [DnD-Kit documentation](https://docs.dndkit.com/presets/sortable#drag-overlay/) - This is what I followed in order to setup the drag & drop functionality for the project.
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
-
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
-
-## Acknowledgments
-
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**
+- Website - [David Henery](https://www.djhwebdevelopment.com)
+- Frontend Mentor - [@David-Henery4](https://www.frontendmentor.io/profile/David-Henery4)
+- Linkedin - [Profile](https://www.linkedin.com/in/david-henery-725458241/)
