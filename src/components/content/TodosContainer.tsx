@@ -30,13 +30,16 @@ const TodosContainer = async ({ userId, searchParams }: UserId) => {
   return (
     <>
       <menu className="w-full mt-4 rounded-md bg-white shadow-lg smLap:mt-6 dark:bg-todoBg_dark">
-        <SortableContainer userId={userId} todosList={todosList}>
+        <SortableContainer userId={userId} todosList={todosList} />
         <li className="px-5 py-4 flex justify-between items-center text-xs text-labelGrey_light smLap:px-6 smLap:py-5 dark:text-dragNDropLabel_dark">
-          <p className="min-w-max">{getCompletedTodosTotal()} items left</p>
+          <p className="min-w-max">
+            {getCompletedTodosTotal() <= 0
+              ? "You have no items"
+              : `${getCompletedTodosTotal()} items left`}
+          </p>
           <TodosStatusBar searchParams={searchParams} size="lg" />
-          <ClearCompletedBtn userId={userId} />
+          <ClearCompletedBtn todosList={todosList} userId={userId} />
         </li>
-        </SortableContainer>
       </menu>
       <TodosStatusBar searchParams={searchParams} size="sm" />
     </>
