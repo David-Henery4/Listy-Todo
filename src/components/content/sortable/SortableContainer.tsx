@@ -24,7 +24,7 @@ import {
 import SortableTodo from "./SortableTodo";
 import Todo from "../todo/Todo";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
-
+import { PropsWithChildren } from "react";
 
 export interface TodoSchema {
   id: string;
@@ -33,7 +33,7 @@ export interface TodoSchema {
   isCompleted: boolean;
   createdAt: Date;
   updatedAt: Date;
-  orderNumber: number
+  orderNumber: number;
 }
 
 export interface DnDTypes {
@@ -44,7 +44,7 @@ export interface DnDTypes {
   };
   setNodeRef?: (node: HTMLElement | null) => void;
   setActivatorNodeRef?: (node: HTMLElement | null) => void;
-} 
+}
 
 type ActiveIdState = UniqueIdentifier | null;
 
@@ -59,7 +59,11 @@ interface SortableContainerProps extends Omit<UserId, "searchParams"> {
 // Helps make the changes LOOK faster
 // But could be problems if errors occur when sending data
 
-const SortableContainer = ({ userId, todosList }: SortableContainerProps) => {
+const SortableContainer = ({
+  userId,
+  todosList,
+  children,
+}: PropsWithChildren<SortableContainerProps>) => {
   const [activeId, setActiveId] = useState<ActiveIdState>(null);
   const [activeItem, setActiveItem] = useState<TodoSchema>({
     id: "",
@@ -125,19 +129,34 @@ const SortableContainer = ({ userId, todosList }: SortableContainerProps) => {
   }, [todosList]);
   //
   return (
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-    >
-      <SortableContext items={items} strategy={verticalListSortingStrategy}>
-        {items.map((item) => {
-          return <SortableTodo key={item.id} {...item} setItems={setItems} />;
-        })}
-      </SortableContext>
-      <DragOverlay>{activeId ? <Todo {...activeItem} /> : null}</DragOverlay>
-    </DndContext>
+    <>
+      {items.length <= 0 ? (
+        <li className="px-5 py-4 flex justify-between items-center text-xs text-labelGrey_light smLap:px-6 smLap:py-5 dark:text-dragNDropLabel_dark">
+          <p className="w-full text-center text-base">
+            You have no todos! Please create a todo to get started
+          </p>
+        </li>
+      ) : (
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext items={items} strategy={verticalListSortingStrategy}>
+            {items.map((item) => {
+              return (
+                <SortableTodo key={item.id} {...item} setItems={setItems} />
+              );
+            })}
+          </SortableContext>
+          <DragOverlay>
+            {activeId ? <Todo {...activeItem} /> : null}
+          </DragOverlay>
+        </DndContext>
+      )}
+      {items.length >= 1 && <>{children}</>}
+    </>
   );
 };
 
