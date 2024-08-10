@@ -1,13 +1,14 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+// Testing http://localhost:3000
 
 export async function signinWithGoogle() {
   const supabase = createClient();
   const { error, data } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: "http://localhost:3000/auth/callback",
+      redirectTo: "https://listy-todo.vercel.app/auth/callback",
       queryParams: { prompt: "consent", access_type: "offline" },
     },
   });
@@ -25,7 +26,7 @@ export async function signinWithGithub (){
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
-      redirectTo: "http://localhost:3000/auth/callback",
+      redirectTo: "https://listy-todo.vercel.app/auth/callback",
     },
   });
   if (error) {
